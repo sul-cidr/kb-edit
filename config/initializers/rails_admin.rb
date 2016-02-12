@@ -35,15 +35,40 @@ RailsAdmin.config do |config|
     # history_show
   end
 
+
+  config.main_app_name = 'Kindred Britain'
+
   # Disable .js form validation
   config.browser_validations = false
 
+
   config.included_models = [
-    'Indiv',
-    'Event',
-    'Particip',
-    'Occu',
-    'Place',
+    Indiv,
+    Event,
+    Particip,
+    Occu,
+    Place,
   ]
+
+  config.model Indiv do
+    label 'Individuals'
+  end
+
+  config.model Event do
+    label 'Events'
+  end
+
+  config.model Particip do
+    label 'Participations'
+  end
+
+  config.model Occu do
+    label 'Occupations'
+  end
+
+  config.model Place do
+    label 'Places'
+  end
+
 
 end
