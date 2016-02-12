@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 0) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "edges", primary_key: "recno", force: :cascade do |t|
     t.string "target",   limit: 16
@@ -147,7 +148,7 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "occu", primary_key: "recno", force: :cascade do |t|
     t.string  "parent_class", limit: 100
-    t.string  "class",        limit: 100
+    t.string  "class_",       limit: 100
     t.boolean "is_parent"
   end
 
