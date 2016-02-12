@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "event", primary_key: "recno", force: :cascade do |t|
     t.string   "indiv_id",          limit: 12
     t.text     "label"
-    t.string   "class",             limit: 12
-    t.string   "type",              limit: 50
+    t.string   "class_",            limit: 12
+    t.string   "type_",             limit: 50
     t.string   "period_text",       limit: 50
     t.text     "place"
     t.text     "cause"
