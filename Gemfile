@@ -44,6 +44,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 gem 'activerecord-postgis-adapter'
+gem 'rails_admin'
 
 
 group :development, :test do
