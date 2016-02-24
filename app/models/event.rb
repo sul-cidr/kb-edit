@@ -44,4 +44,11 @@ class Event < ActiveRecord::Base
 
   end
 
+  #
+  # Type select options.
+  #
+  def type__enum
+    self.class.uniq.pluck(:type_)
+  end
+
 end
