@@ -19,7 +19,27 @@ class Particip < ActiveRecord::Base
   belongs_to :indiv, foreign_key: :actor_id, primary_key: :indiv_id
 
   rails_admin do
+
     label 'Participation'
+
+    edit do
+      exclude_fields :recno
+    end
+
+  end
+
+  #
+  # Role select options.
+  #
+  def role_enum
+    self.class.uniq.pluck(:role)
+  end
+
+  #
+  # Extent select options.
+  #
+  def extent_enum
+    self.class.uniq.pluck(:extent)
   end
 
 end
