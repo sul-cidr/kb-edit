@@ -15,4 +15,8 @@ class Particip < ActiveRecord::Base
   self.table_name = 'particip'
   self.primary_key = 'recno'
 
+  rails_admin do
+    label 'Participations'
+  end
+
 end

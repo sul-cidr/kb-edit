@@ -50,25 +50,5 @@ RailsAdmin.config do |config|
     Place,
   ]
 
-  config.model Indiv do
-    label 'Individuals'
-  end
-
-  config.model Event do
-    label 'Events'
-  end
-
-  config.model Particip do
-    label 'Participations'
-  end
-
-  config.model Occu do
-    label 'Occupations'
-  end
-
-  config.model Place do
-    label 'Places'
-  end
-
 
 end

@@ -24,4 +24,8 @@ class Place < ActiveRecord::Base
   self.table_name = 'place'
   self.primary_key = 'placeid'
 
+  rails_admin do
+    label 'Places'
+  end
+
 end

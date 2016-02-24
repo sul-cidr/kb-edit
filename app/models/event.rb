@@ -31,4 +31,8 @@ class Event < ActiveRecord::Base
   self.table_name = 'event'
   self.primary_key = 'recno'
 
+  rails_admin do
+    label 'Events'
+  end
+
 end

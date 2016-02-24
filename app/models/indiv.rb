@@ -44,6 +44,10 @@ class Indiv < ActiveRecord::Base
   self.table_name = 'indiv'
   self.primary_key = 'recno'
 
+  rails_admin do
+    label 'Individuals'
+  end
+
   def sex_enum
     ['M', 'F']
   end
