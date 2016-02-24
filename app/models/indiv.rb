@@ -44,21 +44,37 @@ class Indiv < ActiveRecord::Base
   self.table_name = 'indiv'
   self.primary_key = 'recno'
 
+  before_create :set_indiv_id
+
   rails_admin do
+
     label 'Individuals'
+
+    edit do
+      exclude_fields :recno, :indiv_id
+    end
+
   end
 
+  #
+  # Gender select options.
+  #
   def sex_enum
     ['M', 'F']
   end
 
-  def self.next_indiv_id
+  private
 
-    ids = all.pluck(:indiv_id).map do |id|
+  #
+  # Set the next "I<int>" id.
+  #
+  def set_indiv_id
+
+    ids = self.class.all.pluck(:indiv_id).map do |id|
       id.gsub('I', '').to_i
     end
 
-    "I#{ids.max+1}"
+    self.indiv_id = "I#{ids.max+1}"
 
   end
 
