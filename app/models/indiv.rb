@@ -43,6 +43,9 @@ class Indiv < ActiveRecord::Base
   self.table_name = 'indiv'
   self.primary_key = 'recno'
 
+  has_many :indiv_occus, foreign_key: :indiv_id, primary_key: :indiv_id
+  has_many :occus, through: :indiv_occus
+
   before_create :set_indiv_id
 
   rails_admin do
@@ -55,7 +58,7 @@ class Indiv < ActiveRecord::Base
     end
 
     edit do
-      exclude_fields :recno, :indiv_id
+      exclude_fields :recno, :indiv_id, :indiv_occus
     end
 
   end

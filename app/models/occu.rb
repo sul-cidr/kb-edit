@@ -15,6 +15,7 @@ class Occu < ActiveRecord::Base
 
   rails_admin do
     label 'Occupation'
+    object_label_method :class_
   end
 
 end

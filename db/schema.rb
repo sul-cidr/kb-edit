@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "indiv_occu", primary_key: "recno", force: :cascade do |t|
-    t.string "indiv_id", limit: 12
-    t.string "occu",     limit: 30
+    t.string "indiv_id",  limit: 12
+    t.string "occu_text", limit: 30
   end
 
   create_table "indiv_text", primary_key: "indiv_id", force: :cascade do |t|
