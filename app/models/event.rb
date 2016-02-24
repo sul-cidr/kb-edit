@@ -32,7 +32,8 @@ class Event < ActiveRecord::Base
 
   rails_admin do
 
-    label 'Events'
+    label 'Event'
+    object_label_method :label
 
     list do
       include_fields :recno, :label, :type_

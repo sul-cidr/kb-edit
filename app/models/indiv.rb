@@ -47,7 +47,8 @@ class Indiv < ActiveRecord::Base
 
   rails_admin do
 
-    label 'Individuals'
+    label 'Individual'
+    object_label_method :fullname
 
     list do
       include_fields :indiv_id, :fullname

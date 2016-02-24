@@ -14,7 +14,7 @@ class Occu < ActiveRecord::Base
   self.primary_key = 'recno'
 
   rails_admin do
-    label 'Occupations'
+    label 'Occupation'
   end
 
 end

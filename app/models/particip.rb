@@ -15,8 +15,11 @@ class Particip < ActiveRecord::Base
   self.table_name = 'particip'
   self.primary_key = 'recno'
 
+  belongs_to :event, foreign_key: :event_id
+  belongs_to :indiv, foreign_key: :actor_id, primary_key: :indiv_id
+
   rails_admin do
-    label 'Participations'
+    label 'Participation'
   end
 
 end
