@@ -52,4 +52,14 @@ class Indiv < ActiveRecord::Base
     ['M', 'F']
   end
 
+  def self.next_indiv_id
+
+    ids = all.pluck(:indiv_id).map do |id|
+      id.gsub('I', '').to_i
+    end
+
+    "I#{ids.max+1}"
+
+  end
+
 end
