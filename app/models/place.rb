@@ -25,7 +25,13 @@ class Place < ActiveRecord::Base
   self.primary_key = 'placeid'
 
   rails_admin do
+
     label 'Places'
+
+    list do
+      include_fields :placeid, :dbname
+    end
+
   end
 
 end
