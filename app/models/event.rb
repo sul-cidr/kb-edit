@@ -5,8 +5,8 @@
 #  recno             :integer          not null, primary key
 #  indiv_id          :string(12)
 #  label             :text
-#  class             :string(12)
-#  type              :string(50)
+#  class_            :string(12)
+#  type_             :string(50)
 #  period_text       :string(50)
 #  place             :text
 #  cause             :text
@@ -25,7 +25,6 @@
 #  event_period_year :integer
 #
 
-
 class Event < ActiveRecord::Base
 
   self.table_name = 'event'
@@ -34,6 +33,10 @@ class Event < ActiveRecord::Base
   rails_admin do
 
     label 'Events'
+
+    list do
+      include_fields :recno, :label, :type_
+    end
 
     edit do
       exclude_fields :recno, :indiv_id

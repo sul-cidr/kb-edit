@@ -2,8 +2,8 @@
 #
 # Table name: indiv
 #
-#  recno          :integer          not null
-#  indiv_id       :string(12)       not null, primary key
+#  recno          :integer          not null, primary key
+#  indiv_id       :string(12)       not null
 #  sex            :string(1)
 #  fullname       :string(255)
 #  reli           :string(255)
@@ -38,7 +38,6 @@
 #  spfx           :string(20)
 #
 
-
 class Indiv < ActiveRecord::Base
 
   self.table_name = 'indiv'
@@ -49,6 +48,10 @@ class Indiv < ActiveRecord::Base
   rails_admin do
 
     label 'Individuals'
+
+    list do
+      include_fields :indiv_id, :fullname
+    end
 
     edit do
       exclude_fields :recno, :indiv_id
