@@ -32,7 +32,13 @@ class Event < ActiveRecord::Base
   self.primary_key = 'recno'
 
   rails_admin do
+
     label 'Events'
+
+    edit do
+      exclude_fields :recno, :indiv_id
+    end
+
   end
 
 end
