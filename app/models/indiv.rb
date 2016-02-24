@@ -44,4 +44,8 @@ class Indiv < ActiveRecord::Base
   self.table_name = 'indiv'
   self.primary_key = 'recno'
 
+  def sex_enum
+    ['M', 'F']
+  end
+
 end
