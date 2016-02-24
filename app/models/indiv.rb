@@ -42,6 +42,6 @@
 class Indiv < ActiveRecord::Base
 
   self.table_name = 'indiv'
-  self.primary_key = 'indiv_id'
+  self.primary_key = 'recno'
 
 end
