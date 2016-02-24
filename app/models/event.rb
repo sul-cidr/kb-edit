@@ -36,7 +36,7 @@ class Event < ActiveRecord::Base
     object_label_method :label
 
     list do
-      include_fields :recno, :label, :type_
+      include_fields :recno, :indiv_id, :label, :type_
     end
 
     edit do
