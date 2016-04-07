@@ -1,0 +1,9 @@
+//** NOTES **\\
+
+- db needs to be a dump of orbis-prod:kblean, NOT created by rake db:create
+
+# on orbis-prod
+$ pg_dump -U postgres -p 5432 -F c -n public -c -x -O -d kblean -f ~/pgbackup/kindred_full_20160324.backup
+
+# locally
+$ pg_restore -d kb_development -c -O /kb/dump/kindred_full_20160324.backup
