@@ -1,24 +1,5 @@
 RailsAdmin.config do |config|
 
-  ### Popular gems integration
-
-  ## == Devise ==
-  # config.authenticate_with do
-  #   warden.authenticate! scope: :user
-  # end
-  # config.current_user_method(&:current_user)
-
-  ## == Cancan ==
-  # config.authorize_with :cancan
-
-  ## == Pundit ==
-  # config.authorize_with :pundit
-
-  ## == PaperTrail ==
-  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
-
-  ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
-
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
@@ -140,7 +121,7 @@ RailsAdmin.config do |config|
       end
       field :label
       field :indiv_id do
-        label "Subj (if applic)"
+        label "Subj Indiv (if applic.)"
       end
       field :period_text do
         label "When"
@@ -191,4 +172,90 @@ RailsAdmin.config do |config|
       field :cause
     end
   end
+
+  config.model 'Particip' do
+    list do
+      field :event_id do
+        label "Event Id"
+      end
+      field :actor_id do
+        label "Individual Id"
+      end
+      field :role do
+        label "Role"
+      end
+    end
+    edit do
+      field :event_id do
+        label "Event Id"
+      end
+      field :actor_id do
+        label "Individual Id"
+      end
+      field :role do
+        label "Role"
+        help "One of 'child', 'father', or 'mother' for BIRT; 'wife'
+        or 'husband' for MARR; 'principal for all other EVENT types.'"
+      end
+    end
+  end
+
+  config.model 'Occu' do
+    list do
+
+    end
+    edit do
+
+    end
+  end
+
+  config.model 'Place' do
+    list do
+      sort_by :ccode
+      field :placeid
+      field :dbname do
+        label "Place name"
+      end
+      field :admin1
+      field :admin2
+      field :ccode do
+        label "Country code"
+        sort_reverse false
+      end
+    end
+    edit do
+      field :placeid
+      field :dbname do
+        label "Place name"
+      end
+      field :admin1 do
+        help "'Scotland' or 'Wales' if applicable"
+      end
+      field :admin2 do
+        help "County (includes London), Province, or State (US)"
+      end
+      field :ccode do
+        label "Country code"
+      end
+    end
+  end
+
+  ### Popular gems integration
+
+  ## == Devise ==
+  # config.authenticate_with do
+  #   warden.authenticate! scope: :user
+  # end
+  # config.current_user_method(&:current_user)
+
+  ## == Cancan ==
+  # config.authorize_with :cancan
+
+  ## == Pundit ==
+  # config.authorize_with :pundit
+
+  ## == PaperTrail ==
+  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+
+  ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 end
