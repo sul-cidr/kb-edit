@@ -7,3 +7,11 @@ $ pg_dump -U postgres -p 5432 -F c -n public -c -x -O -d kblean -f ~/pgbackup/ki
 
 # locally
 $ pg_restore -d kb_development -c -O /kb/dump/kindred_full_20160324.backup
+
+$ pg_dump -F c -n public -c -x -O -d kb_development -f /kb/dump/kb_dev_20160426.backup
+
+  -F format=custom
+  -n schema=public
+  -c clean
+  -x no privileges
+  -O no owner

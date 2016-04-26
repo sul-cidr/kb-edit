@@ -71,6 +71,10 @@ RailsAdmin.config do |config|
       field :nsfx do
         label "Name suffix"
       end
+      field :sex do
+        label "Sex"
+        help "F or M"
+      end
       # field :birthdate do
       #   label "Birth date"
       # end
@@ -140,6 +144,7 @@ RailsAdmin.config do |config|
       end
       field :label do
         label "Label, e.g. 'Birth of Horace Debussey Jones'"
+        help "Mandatory; this appears in timeline and event roll(s)"
       end
       field :period_text do
         label "When"
