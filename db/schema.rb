@@ -126,6 +126,12 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "image_id", limit: 12
   end
 
+  create_table "occu", primary_key: "recno", force: :cascade do |t|
+    t.string  "parent_class", limit: 100
+    t.string  "class_",       limit: 100
+    t.boolean "is_parent"
+  end
+
   create_table "indiv_occu", primary_key: "recno", force: :cascade do |t|
     t.string "indiv_id",  limit: 12
     t.string "occu_text", limit: 30
@@ -144,12 +150,6 @@ ActiveRecord::Schema.define(version: 0) do
     t.text    "odnb_prof"
     t.boolean "lasttag"
     t.text    "professions2"
-  end
-
-  create_table "occu", primary_key: "recno", force: :cascade do |t|
-    t.string  "parent_class", limit: 100
-    t.string  "class_",       limit: 100
-    t.boolean "is_parent"
   end
 
   create_table "odnb", primary_key: "odnb_id", force: :cascade do |t|

@@ -22,9 +22,9 @@ class Particip < ActiveRecord::Base
 
     label 'Participation'
 
-    edit do
-      exclude_fields :recno
-    end
+    # edit do
+    #   exclude_fields :recno
+    # end
 
   end
 

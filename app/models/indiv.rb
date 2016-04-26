@@ -53,13 +53,13 @@ class Indiv < ActiveRecord::Base
     label 'Individual'
     object_label_method :fullname
 
-    list do
-      include_fields :indiv_id, :fullname
-    end
-
-    edit do
-      exclude_fields :recno, :indiv_id, :indiv_occus
-    end
+    # list do
+    #   include_fields :recno, :indiv_id, :fullname
+    # end
+    #
+    # edit do
+    #   exclude_fields :recno, :indiv_id #, :indiv_occus
+    # end
 
   end
 

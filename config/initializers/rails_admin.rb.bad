@@ -1,4 +1,5 @@
 RailsAdmin.config do |config|
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
@@ -31,8 +32,11 @@ RailsAdmin.config do |config|
 
   config.model 'Indiv' do
     list do
+      field :recno
       field :indiv_id
       field :fullname
+      # field :birthyear
+      # field :deathyear
       sort_by :recno
       field :recno do
         sort_reverse true
@@ -44,16 +48,12 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      # exclude_fields :indiv_id, :recno, :reli, :fams, :famc, :sim20, :birt, :deat,
+      # exclude_fields :reli, :fams, :famc, :sim20, :birt, :deat, :best, :dest,
       # :perioddist, :search_names, :perioddist_new, :chantext, :chandate,
-      # :diedyoung
+      # :diedyoung, :bestconf, :destconf
 
       field :fullname do
         label "Full name"
-      end
-      field :sex do
-        label "Sex"
-        help "M or F"
       end
       field :givn do
         label "Given name"
@@ -74,6 +74,10 @@ RailsAdmin.config do |config|
       end
       field :nsfx do
         label "Name suffix"
+      end
+      field :sex do
+        label "Sex"
+        help "F or M"
       end
       field :odnb_id do
         label "ODNB id"
@@ -116,18 +120,16 @@ RailsAdmin.config do |config|
 
   config.model 'Event' do
     list do
-      sort_by :recno
+      sort_by :type_
       field :recno do
         label "Event id"
-        sort_reverse true
       end
-      # sort_by :type_
-      # field :type_ do
-      #   sort_reverse false
-      # end
+      field :type_ do
+        sort_reverse false
+      end
       field :label
       field :indiv_id do
-        label "Subj (if applic)"
+        label "Subj Indiv (if applic.)"
       end
       field :period_text do
         label "When"
@@ -140,16 +142,13 @@ RailsAdmin.config do |config|
         label "Event id"
         help "Display only; do not enter or alter"
       end
-      field :indiv_id do
-        label "Subject indiv_id"
-        help "If applicable"
-      end
       field :type_ do
         label "Type"
         help "Select from dropdown"
       end
       field :label do
         label "Label, e.g. 'Birth of Horace Debussey Jones'"
+        help "Mandatory; this appears in timeline and event roll(s)"
       end
       field :period_text do
         label "When"
@@ -182,22 +181,90 @@ RailsAdmin.config do |config|
       field :cause
     end
   end
+
+  config.model 'Particip' do
+    list do
+      field :event_id do
+        label "Event Id"
+      end
+      field :actor_id do
+        label "Individual Id"
+      end
+      field :role do
+        label "Role"
+      end
+    end
+    edit do
+      field :event_id do
+        label "Event Id"
+      end
+      field :actor_id do
+        label "Individual Id"
+      end
+      field :role do
+        label "Role"
+        help "One of 'child', 'father', or 'mother' for BIRT; 'wife'
+        or 'husband' for MARR; 'principal for all other EVENT types.'"
+      end
+    end
+  end
+
+  # config.model 'Occu' do
+  #   list do
+  #
+  #   end
+  #   edit do
+  #
+  #   end
+  # end
+
+  config.model 'Place' do
+    list do
+      sort_by :ccode
+      field :placeid
+      field :dbname do
+        label "Place name"
+      end
+      field :admin1
+      field :admin2
+      field :ccode do
+        label "Country code"
+        sort_reverse false
+      end
+    end
+    edit do
+      field :placeid
+      field :dbname do
+        label "Place name"
+      end
+      field :admin1 do
+        help "'Scotland' or 'Wales' if applicable"
+      end
+      field :admin2 do
+        help "County (includes London), Province, or State (US)"
+      end
+      field :ccode do
+        label "Country code"
+      end
+    end
+  end
+
+  ### Popular gems integration
+
+  ## == Devise ==
+  # config.authenticate_with do
+  #   warden.authenticate! scope: :user
+  # end
+  # config.current_user_method(&:current_user)
+
+  ## == Cancan ==
+  # config.authorize_with :cancan
+
+  ## == Pundit ==
+  # config.authorize_with :pundit
+
+  ## == PaperTrail ==
+  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+
+  ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 end
-### Popular gems integration
-
-## == Devise ==
-# config.authenticate_with do
-#   warden.authenticate! scope: :user
-# end
-# config.current_user_method(&:current_user)
-
-## == Cancan ==
-# config.authorize_with :cancan
-
-## == Pundit ==
-# config.authorize_with :pundit
-
-## == PaperTrail ==
-# config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
-
-### More at https://github.com/sferik/rails_admin/wiki/Base-configuration

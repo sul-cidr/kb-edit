@@ -28,9 +28,9 @@ class Place < ActiveRecord::Base
 
     label 'Place'
 
-    list do
-      include_fields :placeid, :dbname
-    end
+    # list do
+    #   include_fields :placeid, :dbname
+    # end
 
   end
 

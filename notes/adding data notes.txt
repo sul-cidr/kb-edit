@@ -1,0 +1,11 @@
+adding data to KB v1
+
+- add INDIVs
+
+- add Places, drawn from events
+  - ccode (2-letter code: ISO 3166-1 alpha-2; https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+  - admin1 (Great Britain country if applicable: England, Scotland, Wales)
+  - admin2 (county for GB; state for US; )
+
+- add Events
+  - type year first to get corrrect calendar

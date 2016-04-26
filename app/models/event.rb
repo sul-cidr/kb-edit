@@ -35,13 +35,15 @@ class Event < ActiveRecord::Base
     label 'Event'
     object_label_method :label
 
-    list do
-      include_fields :recno, :indiv_id, :label, :type_
-    end
+    # do this stuff in initializer
 
-    edit do
-      exclude_fields :recno, :indiv_id
-    end
+    # list do
+    #   include_fields :recno, :indiv_id, :label, :type_
+    # end
+    #
+    # edit do
+    #   exclude_fields :recno, :indiv_id
+    # end
 
   end
 
