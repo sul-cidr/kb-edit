@@ -30,20 +30,12 @@ class Event < ActiveRecord::Base
   self.table_name = 'event'
   self.primary_key = 'recno'
 
+  has_one :place, primary_key: :place_id, foreign_key: :placeid
+
   rails_admin do
 
     label 'Event'
     object_label_method :label
-
-    # do this stuff in initializer
-
-    # list do
-    #   include_fields :recno, :indiv_id, :label, :type_
-    # end
-    #
-    # edit do
-    #   exclude_fields :recno, :indiv_id
-    # end
 
   end
 
@@ -51,7 +43,7 @@ class Event < ActiveRecord::Base
   # Type select options.
   #
   def type__enum
-    self.class.uniq.pluck(:type_)
+    self.class.uniq.pluck(:type_).sort()
   end
 
 end

@@ -27,6 +27,7 @@ class Place < ActiveRecord::Base
   rails_admin do
 
     label 'Place'
+    object_label_method :dbname
 
     # list do
     #   include_fields :placeid, :dbname

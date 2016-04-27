@@ -121,11 +121,9 @@ RailsAdmin.config do |config|
         label "Event id"
         sort_reverse true
       end
-      # sort_by :type_
-      # field :type_ do
-      #   sort_reverse false
-      # end
-      field :label
+      field :type_ do
+        label "Type"
+      end
       field :indiv_id do
         label "Subj (if applic)"
       end
@@ -136,10 +134,10 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      field :recno do
-        label "Event id"
-        help "Display only; do not enter or alter"
-      end
+      # field :recno do
+      #   label "Event id"
+      #   help "Display only; do not enter or alter"
+      # end
       field :indiv_id do
         label "Subject indiv_id"
         help "If applicable"
@@ -174,10 +172,14 @@ RailsAdmin.config do |config|
       # field :place do
       #   help "address, city, province, country; e.g. 'Russell Square, London, U.K.'"
       # end
-      field :place_id do
+      field :place_id, :enum do
+        enum do
+          Place.all.map {|p| [p.dbname, p.placeid]}
+        end
         label "Place Id"
         help "From Places table"
       end
+
       field :notes
       field :cause
     end
