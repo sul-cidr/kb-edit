@@ -32,11 +32,19 @@ class Event < ActiveRecord::Base
 
   has_one :place, primary_key: :place_id, foreign_key: :placeid
 
-  rails_admin do
+  has_many :particips, primary_key: :recno, foreign_key: :event_id
+  has_many :indivs, :through => :particips
 
+  accepts_nested_attributes_for :indivs, :allow_destroy => true
+  # attr_accessible :indiv_ids
+
+  rails_admin do
     label 'Event'
     object_label_method :label
 
+    configure :indivs do
+
+    end
   end
 
   #

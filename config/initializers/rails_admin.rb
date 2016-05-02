@@ -86,43 +86,22 @@ RailsAdmin.config do |config|
         label "Occupation(s)"
         help "choose 0 or more"
       end
-      # field :birthdate do
-      #   label "Birth date"
-      # end
-      # field :birthyear do
-      #   label "Birth year (certain)"
-      #   help "Enter certain OR approx. not both"
-      # end
-      # field :birth_abt do
-      #   label "Birth year (approx.)"
-      # end
-      # field :best do
-      #   label "Birth year (machine estimated; don't enter for new records)"
-      #   help ""
-      # end
-      # field :deathdate do
-      #   label "Death date"
-      # end
-      # field :deathyear do
-      #   label "Death year (certain)"
-      #   help "Enter certain OR approx. not both"
-      # end
-      # field :death_abt do
-      #   label "Death year (approx.)"
-      # end
-      # field :dest do
-      #   label "Death year (machine estimated; don't enter for new)"
-      #   help ""
-      # end
     end
   end
 
   config.model 'Particip' do
     list do
-
     end
     edit do
-
+      field :event do
+        label "Event"
+      end
+      field :indiv do
+        label "Individual"
+      end
+      field :role do
+        label "Role"
+      end
     end
   end
 
@@ -149,10 +128,9 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      # field :recno do
-      #   label "Event id"
-      #   help "Display only; do not enter or alter"
-      # end
+      field :indivs do
+        label 'event participants'
+      end
       field :indiv_id do
         label "Subject indiv_id"
         help "If applicable"
@@ -232,6 +210,10 @@ RailsAdmin.config do |config|
       field :admin2 do
         label "admin2"
         help "UK county (incl. London) or US state, if applicable"
+      end
+      field :ccode do
+        label "country code"
+        help "2 characters"
       end
     end
   end
