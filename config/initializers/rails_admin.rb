@@ -37,6 +37,9 @@ RailsAdmin.config do |config|
       field :recno do
         sort_reverse true
       end
+      field :occus do
+        label "Occupation(s)"
+      end
       # sort_by :surn
       # field :surn do
       #   sort_reverse false
@@ -114,6 +117,15 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Particip' do
+    list do
+
+    end
+    edit do
+
+    end
+  end
+
   config.model 'Event' do
     list do
       sort_by :recno
@@ -124,9 +136,12 @@ RailsAdmin.config do |config|
       field :type_ do
         label "Type"
       end
-      field :indiv_id do
-        label "Subj (if applic)"
+      field :label do
+        label "Event"
       end
+      # field :indiv_id do
+      #   label "Subj (if applic)"
+      # end
       field :period_text do
         label "When"
       end
@@ -169,19 +184,55 @@ RailsAdmin.config do |config|
         label "Year (machine est.)"
         help "Use Year (approx.) for new records"
       end
-      # field :place do
-      #   help "address, city, province, country; e.g. 'Russell Square, London, U.K.'"
-      # end
-      field :place_id, :enum do
-        enum do
-          Place.all.map {|p| [p.dbname, p.placeid]}
-        end
-        label "Place Id"
-        help "From Places table"
+      field :place_text do
+        label "Place name"
+        help "address, city, province, country; e.g. 'Russell Square, London, U.K.'"
+      end
+      field :place_id do #, :enum do
+        # enum do
+        #   Place.all.map {|p| [p.dbname, p.placeid]}
+        # end
+        label "Mapped place id (integer)"
+        help "for UK county (incl. London), US state, or country; From Places table"
       end
 
       field :notes
       field :cause
+    end
+  end
+  config.model 'Place' do
+    list do
+      field :placeid do
+        label "Place id"
+      end
+      field :dbname do
+        label "Place name"
+      end
+      field :admin1 do
+        label "admin1"
+      end
+      field :admin2 do
+        label "admin2"
+      end
+      field :ccode do
+        label "country"
+      end
+    end
+    edit do
+      # field :placeid do
+      #   label "Place id"
+      # end
+      field :dbname do
+        label "Place name"
+      end
+      field :admin1 do
+        label "admin1"
+        help "UK country (England, Scotland, Wales) if applicable"
+      end
+      field :admin2 do
+        label "admin2"
+        help "UK county (incl. London) or US state, if applicable"
+      end
     end
   end
 end

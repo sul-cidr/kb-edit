@@ -9,7 +9,6 @@
 #  extent   :string(12)
 #
 
-
 class Particip < ActiveRecord::Base
 
   self.table_name = 'particip'
@@ -21,10 +20,6 @@ class Particip < ActiveRecord::Base
   rails_admin do
 
     label 'Participation'
-
-    # edit do
-    #   exclude_fields :recno
-    # end
 
   end
 

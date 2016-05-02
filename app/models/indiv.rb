@@ -50,7 +50,7 @@ class Indiv < ActiveRecord::Base
 
   rails_admin do
 
-    label 'Individual'
+    label 'Indiv'
     object_label_method :fullname
 
   end
