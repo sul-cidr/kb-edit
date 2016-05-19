@@ -18,9 +18,7 @@ class Particip < ActiveRecord::Base
   belongs_to :indiv, foreign_key: :actor_id, primary_key: :indiv_id
 
   rails_admin do
-
     label 'Participation'
-
   end
 
   #

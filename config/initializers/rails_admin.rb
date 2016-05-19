@@ -53,17 +53,19 @@ RailsAdmin.config do |config|
 
       field :fullname do
         label "Full name"
+        help "No titles/suffixes like 'Dr.' or 'OBE'"
       end
       field :sex do
         label "Sex"
         help "M or F"
       end
       field :givn do
-        label "Given name"
+        label "Given name(s)"
+        help "First, middle"
       end
       field :surn do
         label "Surname"
-        help "without prefix; add below"
+        help "without prefix (e.g. 'von' or 'de'); add below"
       end
       field :spfx do
         label "surname prefix"
@@ -71,16 +73,19 @@ RailsAdmin.config do |config|
       end
       field :marnm do
         label "Married name"
+        help ""
       end
       field :npfx do
         label "Name prefix"
+        help "e.g. 'Sir', 'Countess', 'Capt.'"
       end
       field :nsfx do
         label "Name suffix"
+        help "e.g. '7th Earl of Dunmore', or 'RN, CBE'"
       end
       field :odnb_id do
         label "ODNB id"
-        help "ODNB id if in, empty if not"
+        help "ODNB id if applicable"
       end
       field :occus do
         label "Occupation(s)"
@@ -94,13 +99,17 @@ RailsAdmin.config do |config|
     end
     edit do
       field :event do
-        label "Event"
+        label "Event ID"
+        help "Enter ID appearing above (w/o the '#'); if none,
+          click 'Save and edit' button for Event record"
       end
       field :indiv do
-        label "Individual"
+        label "Individual ID"
+        help ""
       end
       field :role do
         label "Role"
+        help "for BIRT: mother, father, child; for MARR: husband, wife"
       end
     end
   end
@@ -128,27 +137,32 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      field :indivs do
-        label 'event participants'
-      end
-      field :indiv_id do
-        label "Subject indiv_id"
-        help "If applicable"
-      end
+      # field :indivs do
+      #   label 'Indiv participants'
+      # end
       field :type_ do
         label "Type"
         help "Select from dropdown"
       end
+      field :indiv_id do
+        label "Subject indiv_id"
+        help "for all types <em>except</em> MARR"
+      end
+      field :particips do
+        label "Particip(ation) records"
+        help "*** First click 'Save and edit' to get Event ID"
+      end
       field :label do
-        label "Label, e.g. 'Birth of Horace Debussey Jones'"
+        label "Label"
+        help "e.g. 'Birth of <fullname>'; Marriage of <fullname> and <fullname>"
       end
       field :period_text do
         label "When"
-        help "Descriptive phrase, if applicable; e.g. About Mar 1832"
+        help "Textual value given; e.g. '1832', or 'About Mar 1832'"
       end
       field :event_date do
-        label "Date"
-        help "Certain date if known"
+        label "Date certain"
+        help "If known; change calendar year, then click to MM/DD"
       end
       field :year do
         label "Year (certain)"
@@ -156,14 +170,14 @@ RailsAdmin.config do |config|
       end
       field :year_abt do
         label "Year (approx.)"
-        help "Integer"
+        help "If year is uncertain"
       end
       field :year_est do
-        label "Year (machine est.)"
-        help "Use Year (approx.) for new records"
+        label "Year (estimated)"
+        help "If year is entirely unknown (incl e.g. death for living INDIV), enter an estimate"
       end
       field :place_text do
-        label "Place name"
+        label "Place text"
         help "address, city, province, country; e.g. 'Russell Square, London, U.K.'"
       end
       field :place_id do #, :enum do
@@ -173,11 +187,15 @@ RailsAdmin.config do |config|
         label "Mapped place id (integer)"
         help "for UK county (incl. London), US state, or country; From Places table"
       end
-
-      field :notes
-      field :cause
+      field :notes do
+        help "If given"
+      end
+      field :cause do
+        help "If given"
+      end
     end
   end
+
   config.model 'Place' do
     list do
       field :placeid do
@@ -214,6 +232,23 @@ RailsAdmin.config do |config|
       field :ccode do
         label "country code"
         help "2 characters"
+      end
+    end
+  end
+
+  config.model 'Occu' do
+    edit do
+      field :class_ do
+        label "Class"
+        help "Lower case"
+      end
+      field :parent_class do
+        label "Parent class"
+        help "Top-level 'container'"
+      end
+      field :is_parent do
+        label "Is parent?"
+        help "Check if class has/will have 'children'"
       end
     end
   end

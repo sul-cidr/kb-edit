@@ -46,8 +46,8 @@ class Indiv < ActiveRecord::Base
   has_many :indiv_occus, foreign_key: :indiv_id, primary_key: :indiv_id
   has_many :occus, :through => :indiv_occus
 
-  has_many :particips, primary_key: :indiv_id, foreign_key: :actor_id
-  has_many :events, :through => :particips
+  # has_many :particips, primary_key: :indiv_id, foreign_key: :actor_id
+  # has_many :events, :through => :particips
 
   before_create :set_indiv_id
 
