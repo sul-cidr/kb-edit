@@ -1,0 +1,765 @@
+
+/////////////////
+
+SELECT
+s_uk4326.gid,
+s_uk4326.admin_name,
+geom,
+COUNT(distinct particip.actor_id)
+
+FROM
+
+particip,
+event,
+place,
+s_uk4326
+
+WHERE
+particip.event_id = event.recno
+AND
+event.place_id = place.placeid
+AND
+LOWER(COALESCE(s_uk4326.gmi_admin2,s_uk4326.admin_name)) = LOWER(COALESCE(place.admin2,ccode))
+
+GROUP BY
+s_uk4326.gid,
+s_uk4326.admin_name,
+geom
+
+
+///////////Between reformatting/////////////
+SELECT
+
+REPLACE(
+'Between '||
+date_part('year',first(event_period))||
+(CASE
+when verb = 'month' OR (verb = 'month' AND date_part('month',first(event_period)) > 1) then ' '||REPLACE(to_char(first(event_period),'Month'),' ','')
+when verb is null OR date_part('day',first(event_period)) > 1 then ' '||REPLACE(to_char(first(event_period),'Month'),' ','')||' '||REPLACE(to_char(first(event_period),'DD'),'','')
+else ''
+END
+)||
+' and '||
+(CASE
+when date_part('year',(last(event_period) + time '12:00')) <> date_part('year',first(event_period)) then date_part('year',(last(event_period) + time '12:00'))::character varying||' '
+else ''
+END
+)||
+(CASE
+when verb = 'month' OR (verb = 'month' AND date_part('month',last(event_period)) < 12) then ''||REPLACE(to_char(last(event_period),'Month'),' ','')
+when verb is null OR date_part('day',last(event_period)) < 25 then ' '||REPLACE(to_char(last(event_period),'Month'),' ','')||' '||REPLACE(to_char(last(event_period),'DD'),'','')
+else ''
+END
+),'  ',' ')
+
+FROM
+event
+
+WHERE
+
+period_text LIKE '%Between%'
+////////////////
+
+
+////////////STATS QUERY BY OCCUPATION/////////////
+SELECT
+
+indiv_occu.occu,
+target.occu,
+(CASE
+when relation = 'siblingOf' then 'Sibling'
+when relation = 'spouseOf' then 'Spouse'
+when indiv_occu.indiv_id = edges.source then 'Child'
+else 'Parent'
+END
+),
+count(*)
+
+FROM
+
+indiv_occu,
+edges,
+indiv_occu as target
+
+WHERE
+
+indiv_occu.occu IN ('author', 'scholar', 'politician','lawyer','merchant','nobility')
+
+AND
+
+indiv_occu.indiv_id IN (edges.source,edges.target)
+AND
+edges.relation <> 'selfLoop'
+
+AND target.indiv_id IN (edges.source,edges.target)
+AND
+target.indiv_id <> indiv_occu.indiv_id
+
+GROUP BY
+indiv_occu.occu,
+(CASE
+when relation = 'siblingOf' then 'Sibling'
+when relation = 'spouseOf' then 'Spouse'
+when indiv_occu.indiv_id = edges.source then 'Child'
+else 'Parent'
+END
+),
+target.occu
+
+ORDER BY
+indiv_occu.occu,
+(CASE
+when relation = 'siblingOf' then 'Sibling'
+when relation = 'spouseOf' then 'Spouse'
+when indiv_occu.indiv_id = edges.source then 'Child'
+else 'Parent'
+END
+),
+count(*) DESC
+
+////////////////
+
+WITH o as (SELECT string_agg(indiv_occu.occu,',')as occs,indiv_id as occu_id FROM indiv_occu GROUP BY indiv_id)
+
+SELECT
+
+indiv.indiv_id,
+odnbers.fullname,
+indiv.fullname,
+odnbers.birth,
+COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best),
+odnbers.death,
+COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest),
+odnbers.odnb_id,
+odnbers.words,
+odnbers.occu,
+occs
+
+FROM
+indiv
+
+LEFT JOIN odnbers ON LOWER(odnbers.first) LIKE LOWER(indiv.givn) AND LOWER(odnbers.last) LIKE LOWER(indiv.surn)
+LEFT JOIN o ON occu_id = indiv.indiv_id
+WHERE
+
+ABS(COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) - date_part('year',birth)) < 2 AND ABS(COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - date_part('year',death)) < 2
+
+AND
+
+indiv.indiv_id NOT IN (SELECT indiv_id FROM indiv_dist WHERE odnb = 0 AND odnb <> 99)
+
+LIMIT 5
+
+///////////////////////
+
+WITH o as (SELECT string_agg(indiv_occu.occu,',')as occs,indiv_id as occu_id FROM indiv_occu GROUP BY indiv_id)
+
+SELECT
+
+indiv.indiv_id,
+odnbers.fullname,
+indiv.fullname,
+odnbers.birth,
+COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best),
+odnbers.death,
+COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest),
+odnbers.odnb_id,
+odnbers.words,
+odnbers.occu,
+occs
+
+FROM
+indiv
+
+LEFT JOIN odnbers ON LOWER(odnbers.first) LIKE LOWER(indiv.givn) AND LOWER(odnbers.last) LIKE LOWER(indiv.surn)
+LEFT JOIN o ON occu_id = indiv.indiv_id
+WHERE
+
+ABS(COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) - date_part('year',birth)) < 2 AND ABS(COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - date_part('year',death)) < 2
+
+AND
+
+indiv.indiv_id NOT IN (SELECT indiv_id FROM indiv_dist WHERE odnb = 0 AND odnb <> 99)
+
+LIMIT 5
+
+
+
+///////////////////////
+SELECT
+
+indiv.indiv_id,
+indiv.fullname,
+event.place,
+event.period_text,
+indiv_dist.odnb
+
+FROM
+
+indiv
+
+LEFT JOIN event ON event.indiv_id = indiv.indiv_id
+LEFT JOIN place ON event.place_id = place.placeid
+LEFT JOIN s_uk4326 ON LOWER(COALESCE(s_uk4326.gmi_admin2,s_uk4326.admin_name)) = LOWER(COALESCE(place.admin2,ccode))
+LEFT JOIN indiv_dist ON indiv_dist.indiv_id = indiv.indiv_id
+
+WHERE
+
+COALESCE(deathyear,death_abt,dest) > 1799
+
+AND
+
+COALESCE(deathyear,death_abt,dest) < 1901
+
+AND
+
+event.type = 'DEAT'
+
+AND
+
+(ccode = 'it'
+
+OR
+
+ccode = 'gr'
+)
+
+ORDER BY
+odnb
+
+
+///////////////////////
+SELECT
+indiv_dist.indiv_id,
+t.indiv_id,
+((indiv_dist.parentless - t.parentless)::numeric / 20)^2 +
+((indiv_dist.odnb - t.odnb)::numeric/ 10)^2 +
+((indiv_dist.inbred - t.inbred)::numeric / 15)^2 +
+((indiv_dist.tragedy - t.tragedy)::numeric / 6)^2 +
+((indiv_dist.centrality - t.centrality)::numeric / 9)^2 +
+((indiv_dist.children - t.children)::numeric/10)^2 +
+((indiv_dist.marriage - t.marriage)::numeric / 3)^2
+,
+((indiv_dist.parentless - t.parentless)::numeric / 20)^2,
+((indiv_dist.odnb - t.odnb)::numeric/ 10)^2,
+((indiv_dist.inbred - t.inbred)::numeric / 15)^2,
+((indiv_dist.tragedy - t.tragedy)::numeric / 6)^2,
+((indiv_dist.centrality - t.centrality)::numeric / 9)^2,
+((indiv_dist.children - t.children)::numeric/10)^2,
+((indiv_dist.marriage - t.marriage)::numeric / 3)^2,
+*
+
+
+FROM
+
+indiv_dist
+LEFT JOIN indiv_dist as t ON t.indiv_id <> indiv_dist.indiv_id
+
+LIMIT 100
+
+///////////////////////
+
+DROP TABLE newlabels;
+CREATE TABLE newlabels AS
+
+SELECT
+event.recno,
+REPLACE((
+CASE
+WHEN type = 'ANUL' then 'Annulment of the marriage of '||COALESCE(s_indiv.fullname,'')||' and '||COALESCE(t_indiv.fullname,'')
+WHEN type = 'RESI' then 'Resided'
+WHEN type = 'BIRT' then 'Birth of '||b_indiv.fullname
+WHEN type = 'GRAD' then 'Graduated'
+WHEN type = 'DEAT' then 'Died'
+WHEN type = 'RETI' then 'Retired'
+WHEN type = 'NATU' then 'Naturalized'
+WHEN type = 'MARR' then 'Marriage of '||COALESCE(s_indiv.fullname,'')||' and '||COALESCE(t_indiv.fullname,'')
+WHEN type = 'BURI' then 'Buried'
+WHEN type = 'DIV' then 'Divorce of '||COALESCE(s_indiv.fullname,'')||' and '||COALESCE(t_indiv.fullname,'')
+WHEN type = 'IMMI' then 'Immigrated'
+WHEN type = 'BAPM' then 'Baptised'
+else 'ERROR'
+END
+)||
+COALESCE(' in '||event.place,'')||COALESCE(
+' '||
+(CASE 
+when LEFT(event.period_text,3) = 'BET' OR LEFT(event.period_text,3) = 'AFT' OR LEFT(event.period_text,3) = 'BEF' OR LEFT(event.period_text,3) = 'around' then '' 
+when LENGTH(event.period_text) > 5 then 'on'
+else 'in'
+END
+)
+||' '||
+(
+CASE 
+when LENGTH(event.period_text) > 3 then REPLACE(REPLACE(REPLACE(REPLACE(event.period_text, 'BET','between'), 'AFT','after'), 'BEF','before'), 'ABT','')
+else year_est::character varying||' (estimated)'
+END
+)
+), '  ',' ')
+ as newlabel
+
+FROM
+
+event 
+
+LEFT JOIN place ON event.place_id = place.placeid
+LEFT JOIN s_uk4326 ON LOWER(COALESCE(s_uk4326.gmi_admin2,s_uk4326.admin_name)) = LOWER(COALESCE(place.admin2,ccode))
+LEFT JOIN family ON family.fam_id = actor_id
+LEFT JOIN indiv as b_indiv ON b_indiv.indiv_id = event.indiv_id
+LEFT JOIN indiv as s_indiv ON s_indiv.indiv_id = family.f_husb
+LEFT JOIN indiv as t_indiv ON t_indiv.indiv_id = family.f_wife
+
+
+WHERE
+
+type
+IN
+(
+'ANUL',
+'RESI',
+'BIRT',
+'GRAD',
+'DEAT',
+'RETI',
+'NATU',
+'MARR',
+'BURI',
+'DIV',
+'IMMI',
+'BAPM'
+)
+
+
+##########
+
+UPDATE indiv_dist
+
+SET trarray = 
+'['||(
+CASE
+when LOWER(deathtext) LIKE '%wounds%' OR LOWER(deathtext) LIKE '%battle%' OR LOWER(deathtext) LIKE '%killed in action%' OR LOWER(deathtext) LIKE '%cwgc.org%' then 1
+when LOWER(deathtext) LIKE '%hanged%' OR LOWER(deathtext) LIKE '%shot%' OR LOWER(deathtext) LIKE '%executed%' OR LOWER(deathtext) LIKE '%beheaded%' OR LOWER(deathtext) LIKE '%tower hill%' OR LOWER(deathtext) LIKE '%tyburn%' then 1
+when LOWER(deathtext) LIKE '%murdered%' OR LOWER(deathtext) LIKE '%stabbed%' OR LOWER(deathtext) LIKE '%suicide%' OR LOWER(deathtext) LIKE '%killed herself%' OR LOWER(deathtext) LIKE '%killed himself%' then 1
+else diedyoung
+END
+)||
+','||tragic.trarray||','||
+(
+CASE
+when LOWER(eventext) LIKE '%insane%' OR LOWER(eventext) LIKE '%breakdown%' OR LOWER(eventext) LIKE '%lunatic%' then 1
+else 0
+END
+)||']',
+tragedy = 
+total + 
+(
+CASE
+when LOWER(deathtext) LIKE '%wounds%' OR LOWER(deathtext) LIKE '%battle%' OR LOWER(deathtext) LIKE '%killed in action%' OR LOWER(deathtext) LIKE '%cwgc.org%' then 1
+when LOWER(deathtext) LIKE '%hanged%' OR LOWER(deathtext) LIKE '%shot%' OR LOWER(deathtext) LIKE '%executed%' OR LOWER(deathtext) LIKE '%beheaded%' OR LOWER(deathtext) LIKE '%tower hill%' OR LOWER(deathtext) LIKE '%tyburn%' then 1
+when LOWER(deathtext) LIKE '%murdered%' OR LOWER(deathtext) LIKE '%stabbed%' OR LOWER(deathtext) LIKE '%suicide%' OR LOWER(deathtext) LIKE '%killed herself%' OR LOWER(deathtext) LIKE '%killed himself%' then 1
+else diedyoung
+END
+)
++
+(
+CASE
+when LOWER(eventext) LIKE '%insane%' OR LOWER(eventext) LIKE '%breakdown%' OR LOWER(eventext) LIKE '%lunatic%' then 1
+else 0
+END
+)
+
+FROM
+
+tragic,
+trag_text 
+WHERE trag_text.indiv_id = tragic.indiv_id
+AND
+
+tragic.indiv_id = indiv_dist.indiv_id
+
+
+########################
+
+CREATE TABLE trag_text AS
+SELECT
+
+indiv.indiv_id,
+string_agg(DISTINCT COALESCE(event.place,' ')||COALESCE(event.notes,' ')||COALESCE(event.cause,' ')||COALESCE(event.label,' '),' ') as deathtext,
+string_agg(DISTINCT COALESCE(event2.place,' ')||COALESCE(event2.notes,' ')||COALESCE(event2.cause,' ')||COALESCE(event2.label,' '),' ') as eventext
+
+FROM
+
+indiv
+
+LEFT JOIN event ON event.indiv_id = indiv.indiv_id AND event.type = 'DEAT'
+LEFT JOIN event AS event2 ON event2.indiv_id = indiv.indiv_id AND event2.type = 'EVEN'
+
+GROUP BY indiv.indiv_id
+
+
+
+
+#########TRAGIC/TRAGEDY########
+
+//Make sure to set dest = 2013 to dest = 2099 before running this
+//Array is diedyoung,earlyspouse,earlysibling,earlychild,earlyparent
+
+UPDATE indiv SET dest = 2099 WHERE dest = 2013;
+DROP TABLE tragic;
+CREATE TABLE tragic AS
+
+SELECT
+
+indiv.indiv_id,
+SUM(
+CASE
+when target.indiv_id IS NULL AND COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) <= 45  then 1
+else 0
+END
+) as diedyoung,
+SUM(
+(
+CASE
+when edges.relation = 'spouseOf' AND COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - COALESCE(target.deathyear,target.death_abt,target.dest) >= 20 then 1
+when edges.relation = 'siblingOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) < COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) <= 12 then 1
+else 0
+END
+)
+) as total,
+''||
+SUM(
+(
+CASE
+when edges.relation = 'spouseOf' AND COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - COALESCE(target.deathyear,target.death_abt,target.dest) >= 20 then 1
+else 0
+END
+)
+)||','||
+SUM(
+(
+CASE
+when edges.relation = 'siblingOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+else 0
+END
+)
+)||','||
+SUM(
+(
+CASE
+when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+else 0
+END
+)
+)||','||
+SUM(
+(
+CASE
+when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) < COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) <= 12 then 1
+else 0
+END
+)
+) as trarray
+
+FROM
+
+indiv
+
+LEFT JOIN edges ON indiv.indiv_id IN (edges.source, edges.target)
+LEFT JOIN indiv as target ON target.indiv_id IN (edges.source, edges.target) AND target.indiv_ID <> indiv.indiv_id
+
+GROUP BY indiv.indiv_id;
+UPDATE indiv SET dest = 2013 WHERE dest = 2099;
+
+
+###################
+
+viz01("'I29854','I29856','I29857','I29845','I29846','I29851','I3958','I7479','I7481','I7482','I11376','I24862','I24863','I29842','I29844','I29845','I29846','I29848','I29849','I29850','I29851','I29852','I29853','I29855','I29857','I29858','I29859','I29860','I29861','I29926','I29927','I29928','I29929','I29930','I29931','I29932','I29933','I29934','I29998','I30000','I30001','I30008','I30009','I30010','I30011','I30012','I30013','I30015','I30014','I30016','I30017','I30018','I30019','I30292','I30293','I30295','I3957','I7478','I11372','I29843','I29841','I29999'","list",5)
+
+
+###################
+
+set search_path = i;
+
+SELECT
+
+indiv_id,'['||
+string_agg(json_events.first||json_events.year::integer - COALESCE(birthyear,birth_abt,best,1000)::integer||','||json_events.last,',')
+||']'
+FROM
+
+indiv
+
+LEFT JOIN json_events ON indiv.indiv_id = ANY(json_events.indiv_array)
+
+GROUP BY
+
+indiv.indiv_id
+
+LIMIT 5
+
+########################################
+
+
+set search_path = i;
+
+DROP TABLE json_events;
+
+CREATE TABLE json_events AS
+
+SELECT
+'{"eventtype": "'||
+string_agg(distinct event.type,',')||
+'", "eventlabel": "'||
+COALESCE(string_agg(distinct event.label,','),'')||
+'", "eventplace": "'||
+COALESCE(string_agg(distinct event.place,','),'')||
+'", "eventdate": "'||
+REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(COALESCE(string_agg(distinct event.period_text,','),''),'BEF','Before'),'AFT','After'),'BET','Between'),'FROM','From'),'ABT','About'),'AND','and')||
+'",'||COALESCE(' "place": '||
+string_agg(distinct event.place_id::character varying,',')||
+',','')||' "year": ' as first,
+string_agg(distinct COALESCE(year,year_abt,year_est)::character varying,',') as 
+year,
+'"accuracy": "'||
+(CASE
+when year_est IS NOT NULL then 'estimated'
+when year_abt IS NOT NULL then 'roughly'
+else 'known'
+END)||
+'", "actor": ['||
+string_agg('"'||particip.actor_id||'"',',')||
+']}' as last,
+array_agg(particip.actor_id) as indiv_array,
+event.recno as event_id
+
+FROM
+
+particip
+
+LEFT JOIN event ON particip.event_id = event.recno
+
+WHERE
+COALESCE(year,year_abt,year_est) IS NOT NULL
+
+GROUP BY
+event.recno
+
+########################
+
+SELECT
+(date_part('year',first(lifeperiod))/10)::numeric(4,0) as year,
+AVG(
+(
+CASE
+when sex = 'M' then date_part('year',last(lifeperiod))/10
+else null
+END
+))  as avg_deathdate_m,
+AVG(
+(
+CASE
+when sex = 'F' then date_part('year',last(lifeperiod))/10
+else null
+END
+))  as avg_deathdate_f,
+AVG(date_part('year',last(lifeperiod)))/10  as avg_deathdate,
+COUNT(*) as frequency
+
+FROM
+
+indiv
+
+WHERE
+
+(date_part('year',last(lifeperiod)) - date_part('year',first(lifeperiod))) > 20
+
+GROUP BY
+(date_part('year',first(lifeperiod))/10)::numeric(4,0)
+
+ORDER BY
+(date_part('year',first(lifeperiod))/10)::numeric(4,0)
+
+
+##########################################
+
+
+WITH q as (
+SELECT
+
+(
+SELECT string_agg(''''||p_twogens||'''',',') FROM p_twogens(indiv_id)
+) as content
+
+FROM
+
+indiv
+
+WHERE
+
+indiv.indiv_id IN ('I12723','I12728','I12715','I12723','I9268','I9263','I7657','I7503','I7462','I7503','I6263','I6262','I3956','I2136','I2136','I2135','I12727','I12728','I12715','I9268','I12727','I6263','I3956','I6262','I7657','I9263','I7460','I7462','I5906','I7460','I5904','I5906','I5874','I5904','I5867','I5868','I5864','I5867','I5854','I5864','I17109','I17113','I17113','I17116','I17116','I21734','I21400','I21399','I21734','I21400','I17109','I5854','I21391','I21399','I5868','I5874','I25748','I25750','I2133','I2135','I2132','I2133','I9208','I9206','I19650','I25748','I21400','I21399','I1957','I25751','I9256','I2132','I21734','I21400','I25750','I25751','I9206','I9256','I1957','I9208','I19650','I21734','I21391','I21399')
+
+)
+SELECT string_agg(content,',') FROM q
+
+##########################################
+##########################################
+WITH q as
+(
+SELECT DISTINCT ON (date_part('year',first(lifeperiod)),indiv.indiv_id)
+'{"lane": '||(row_number()
+OVER
+(ORDER BY date_part('year',first(lifeperiod)))) - 1||', "id": "'||
+fullname||'", "start": '||
+date_part('year',first(lifeperiod))||', "end": '||
+date_part('year',last(lifeperiod))||', "relation": '||
+(
+CASE
+when date_part('year',first(lifeperiod)) < 1731 AND edges.relation = 'childOf' then '"darkblue"'
+when date_part('year',first(lifeperiod)) > 1731 AND edges.relation = 'childOf' then '"lightblue"'
+when edges.relation = 'siblingOf' then '"red"'
+when edges.relation = 'spouseOf' then '"green"'
+else '"gray"'
+END
+)
+||'}' as content
+
+FROM
+
+indiv
+LEFT JOIN edges ON (edges.source = 'I5906' AND edges.target = indiv.indiv_id) OR (edges.source = indiv.indiv_id AND edges.target = 'I5906') 
+
+WHERE
+
+indiv.indiv_id IN (
+SELECT p_twogens('I5906')
+)
+
+AND
+
+edges.relation IS NOT NULL
+
+ORDER BY
+date_part('year',first(lifeperiod)),
+indiv.indiv_id
+
+LIMIT 30
+)
+
+SELECT
+'['||string_agg(content,',')||']'
+FROM
+q
+
+##########################################
+##########################################
+
+'I1889,I21882,I22033,I23552,I23428,I23583,I23492,I18905,I22044,I18450,I22077,I23632,I22097,I22176,I21528'
+
+###################POH#########################
+SELECT
+
+string_agg((SELECT string_agg(source||','||target,',') from o_indiv_path_undirected(indiv2.indiv_id,indiv.indiv_id,2000,0)),',')
+
+FROM
+
+indiv,
+indiv as indiv2
+
+WHERE
+
+indiv.indiv_id IN ('I1889','I21882','I22033','I23552','I23428','I23583','I23492','I18905','I22044','I18450','I22077','I23632','I22097','I22176','I21528')
+
+AND
+
+indiv2.indiv_id IN ('I1889','I21882','I22033','I23552','I23428','I23583','I23492','I18905','I22044','I18450','I22077','I23632','I22097','I22176','I21528')
+
+AND
+
+indiv.indiv_id <> indiv2.indiv_id
+
+
+***************************************************
+SELECT
+
+indiv.indiv_id as id,
+indiv.fullname,
+(
+CASE
+when indiv.indiv_id IN ('I1889','I21882','I22033','I23552','I23428','I23583','I23492','I18905','I22044','I18450','I22077','I23632','I22097','I22176','I21528') then 1
+else 0
+END
+) as adm
+ FROM indiv
+
+where 
+
+indiv.indiv_id IN
+
+('I1237'...
+***************************************************
+
+SELECT * FROM edges where 
+
+source in
+
+('I1237'...
+
+###################KB##########################
+SELECT DISTINCT
+
+ccode
+
+FROM
+
+event
+
+LEFT JOIN
+place on place.placeid = event.placeid
+
+WHERE
+
+date_part('year',first(event_period)) > 1800
+
+and
+
+date_part('year',last(event_period)) < 1830
+
+AND
+
+place.placeid IS NOT NULL
+
+AND
+
+(event.type = 'EVEN'
+
+OR
+
+event.type = 'OCCU')
+
+***********************************
+SELECT
+
+COUNT(s_countries.geom),
+st_asgeojson(s_countries.geom,3,0)
+
+FROM
+
+event
+
+LEFT JOIN place ON place.placeid = event.placeid
+LEFT JOIN s_countries ON lower(s_countries.iso_2digit) = place.ccode
+
+WHERE
+
+event.indiv_id = 'I5906'
+
+AND
+
+s_countries.geom is not null
+
+GROUP BY
+s_countries.geom
+

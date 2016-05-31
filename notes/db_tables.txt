@@ -1,0 +1,44 @@
+     Name       | Used
+--------+-----------------+----
+| edges           | x |
+| event           | x |
+| imagepath       | x |
+| inbred          |  | indirectly
+| indiv           | x |
+| indiv_dist      | x |
+| indiv_events    | x |
+| indiv_image     | x |
+| indiv_occu      | x |
+| indiv_text      | x |
+| occu            | x |
+| odnb            |  | indirectly
+| particip        | x |
+| place           | x |
+| s_uk4326        | x |
+| sims            | x |
+
+NOT USED
+| est_years       |  |
+| event_add       |  |
+| extfamily       |  |
+| family          |  |
+| indiv_for_odnb  |  |
+| indiv_new       |  |
+| indiv_particip2 |  |
+| indiv_topics    |  |
+| json_events     |  |
+| marriage        |  |
+| member          |  |
+| needyears       |  |
+| new_sims        |  |
+| newlabels       |  |
+| odnbers         |  |
+| relatedness     |  |
+| s_uk27700       |  |
+| similarity      |  |
+| spatial_ref_sys |  |
+| spfx            |  |
+| trag_text       |  |
+| tragedy         |  |
+| tragic          |  |
+| z_londonindivs  |  |

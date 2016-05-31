@@ -1,0 +1,61 @@
+  events: [{fullname: "1769 August 15 &mdash; Birth of Napoléon Bonaparte (Ajaccio, Corsica, France) ",…}, {,…},…]
+  0: {fullname: "1769 August 15 &mdash; Birth of Napoléon Bonaparte (Ajaccio, Corsica, France) ",…}
+  1: {,…}
+  2: {fullname: "Between 1799 November 10 and 1804 May 18 &mdash; First Consul of the French Republic ",…}
+  3: {fullname: "Between 1802 January 26 and 1805 March 17 &mdash; President of the Italian Republic ",…}
+  4: {fullname: "About 1806 &mdash; Marriage of Napoléon Bonaparte and Eléonore Denuelle de La Plaigne ",…}
+  5: {fullname: "Between 1806 and 1810 &mdash; Marriage of Napoléon Bonaparte and Maria Łączyńska ",…}
+  6: {,…}
+  7: {fullname: "Between 1805 March 17 and 1814 April 11 &mdash; King of Italy ", notes: " ",…}
+  8: {fullname: "Between 1804 May 18 and 1814 April 6 &mdash; Empereur des Français ", notes: " ",…}
+  9: {,…}
+  10: {fullname: "1810 May 04 &mdash; Birth of Alexandre Florian Joseph Walewski (Walewice, Poland) ",…}
+  11: {fullname: "Between 1812 June and December &mdash; Invasion of Russia ", notes: " ",…}
+  12: {,…}
+  13: {fullname: "Between 1814 April and 1815 February &mdash; Exile on Elba (Mediterranean Sea) ",…}
+  14: {fullname: "Between 1815 March 20 and June 22 &mdash; Empereur des Français ", notes: " ",…}
+  15: {fullname: "1815 June 18 &mdash; Battle of Waterloo (Waterloo, nr. Brussels, Belgium) ",…}
+  16: {,…}
+  17: {fullname: "1821 May 05 &mdash; Died (Longwood House, St. Helena, Atlantic Ocean) ",…}
+  18: {fullname: " &mdash; Soldier, politician ", notes: " ", unixsort: 1388563200, byear: 9999}
+imagepath: "media/370px-Ingres,_Napoleon_on_his_Imperial_throne.jpg"
+indiv: {id: "I28778", gender: "M", birthyear: 1769, deathyear: 1821, name: "Bonaparte",…}
+birthyear: 1769
+centrality: 6
+children: 1
+deathyear: 1821
+depth: 1
+firstname: "Napoléon"
+fullname: "Napoléon Bonaparte"
+gender: "M"
+id: "I28778"
+inbred: 0
+marriage: 5
+name: "Bonaparte"
+occu: ["politician", "sovereign", "army officer"]
+odnb: 3
+suffix: "Empereur des Français"
+tragedy: 0
+trarray: [0, 0, 0, 0, 0, 0]
+nodes: [{indiv_id: "I1663", indiv_name: "James Yorke Scarlett",…},…]
+  0: {indiv_id: "I1663", indiv_name: "James Yorke Scarlett",…}
+  1: {indiv_id: "I1986", indiv_name: "Henry Seymour Conway",…}
+  2: {indiv_id: "I19895", indiv_name: "John Trollope",…}
+  3: {indiv_id: "I21674", indiv_name: "Henry Clinton",…}
+  4: {indiv_id: "I23039", indiv_name: "George Onslow",…}
+  5: {indiv_id: "I23652", indiv_name: "Hew Hamilton-Dalrymple",…}
+  6: {indiv_id: "I24709", indiv_name: "Edward Kerrison", fullname: " &mdash; ‘Army officer'; see ODNB ",…}
+  7: {indiv_id: "I24901", indiv_name: "John Jenkinson", fullname: "1805 May 01 &mdash; Died ", notes: " ",…}
+  8: {indiv_id: "I26914", indiv_name: "John Hely Hutchinson",…}
+  9: {indiv_id: "I26926", indiv_name: "[Gédéon Gaspard] Alfred de Grimaud",…}
+  10: {indiv_id: "I27772", indiv_name: "James Mayer de Rothschild",…}
+  11: {indiv_id: "I28840", indiv_name: "Joachim Murat",…}
+  12: {indiv_id: "I29434", indiv_name: "Francis Nathaniel Conyngham",…}
+  13: {indiv_id: "I29444", indiv_name: "Richard Hussey Vivian",…}
+  14: {indiv_id: "I29523", indiv_name: "Hugues-Bernard Maret",…}
+smallworld: [{name: "John Stuart", id: "I1735", distance: 5},…]
+  0: {name: "John Stuart", id: "I1735", distance: 5}
+  1: {name: "George Washington", id: "I5457", distance: 7}
+  2: {name: "William Penn", id: "I8803", distance: 8}
+  3: {name: "John Russell", id: "I4369", distance: 9}
+  4: {name: "Augustus Henry FitzRoy", id: "I9190", distance: 10}

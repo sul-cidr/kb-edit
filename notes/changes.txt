@@ -1,0 +1,22 @@
+changes between original (kindred) and kblean
+
+pgrouting version change:
+  - KDijkstra_dist_sp() -> pgr_kdijkstraCost (in kinQuery.php and similarity.php)
+    - returns id2 (as target), not vertex_id_target
+  - public.shortest_path() -> pgr_dijkstra (in o_indiv_path_undirected())
+    - returns id2 (as edge), not edge_id
+
+FIELD NAMES
+event.type -> type_
+event.class -> class_
+occu.class -> class_
+
+indiv_occu.occu -> occu_text
+
+event.place -> place_text (for similarity.php)
+
+REFLECTED IN
+p_array_occu()
+
+CORRECTIVES
+- 28Apr restore empty indiv.odnb field

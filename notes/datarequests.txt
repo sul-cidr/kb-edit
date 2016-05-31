@@ -1,0 +1,60 @@
+PHP used:
+kinQuery.php? [ s(source indiv)[indiv_id], q(query type)[gen, list] ]
+countyQuery.php? [s(source indiv)[indiv_id], q(query type)[path]]
+similarity.php? [i[indiv_id], y[year], q(query type)[kin]]
+pathQuery.php? [s=I2967&t=I1797&b=0&a=0&c=0]
+search.php? [s(source indiv), y(year start), e (year end)]
+
+Static sources:
+/kb1/data/world-50m.json
+/kb1/data/world-110m.json
+/kb1/timeline_events.csv
+/kb1/data/occupations.txt
+
+
+on load
+-------
+GET /kb1/data/world-50m.json
+GET /kb1/data/world-110m.json
+GET /kb1/timeline_events.csv
+GET /kb1/data/occupations.txt
+
+GET /kb1/php/kinQuery.php?s=lum&q=lum (gets predefined collection of 'luminaries)')
+GET /kb1/php/countyQuery.php?s=%27I28901%27,...,%27I28917%27&q=path
+
+
+click indiv symbol --> shows bio popup
+------------------
+GET /kb1/php/similarity.php?i=I22760&y=1776&q=kin
+
+  returns ./indiv-similarity-payload.txt
+
+click on indiv name --> gets family network for <name>
+---------------
+GET /kb1/php/kinQuery.php?s=I12145&q=gen
+
+drop one indiv on another, or
+select preset pair from Connections dropdown
+-------------------------
+GET /kb1/php/similarity.php?i=I2967&y=1776&q=kin
+GET /kb1/php/similarity.php?i=I1797&y=1776&q=kin
+GET /kb1/php/pathQuery.php?s=I2967&t=I1797&b=0&a=0&c=0
+GET /kb1/php/countyQuery.php?s=%27I28901%27,...,%27I28917%27&q=path
+
+select profession from People dropdown, e.g. poets
+----------
+GET /kb1/php/kinQuery.php?s=%27I2595%27,%27I23464%27,...,%27I24214%27&q=list
+
+select a family from from People dropdown, e.g. Burney
+----------
+GET /kb1/php/kinQuery.php?s=I28910&q=gen
+GET /kb1/php/similarity.php?i=I28910&y=1776&q=Person
+GET /kb1/php/countyQuery.php?s=%27I28901%27,...,%27I28917%27&q=path
+
+sisters from People dropdown
+-----------
+GET /kb1/php/kinQuery.php?s=%27I19919%27,...,%27I19938%27&q=list
+
+search for person to connect to
+-----------
+GET /kb1/php/search.php?s=Francis%20Bacon&y=468&ye=2013&g=&o=

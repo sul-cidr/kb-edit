@@ -1,0 +1,161 @@
+Tables and custom functions called in PHP
+
+//* TABLES *//
+BASE
+  indiv
+    indiv_occu
+    indiv_image
+  event
+  occu
+  particip
+  place
+
+CALCULATED
+  indiv_text
+  indiv_events [indiv_id, particip_array]
+  edges
+
+  sims
+  indiv_dist
+//**//
+
+kinQuery.php
+------------
+indiv
+	joins:	 indiv_dist, indiv_text, indiv_events
+
+edges
+
+db functions:	p_indivoccu(), p_twogens(), p_arrayoccu(), KDijkstra_dist_sp()
+p_indivoccu(individ text)
+  RETURNS SETOF character varying AS
+  $BODY$
+    with
+    s as ( with
+    r as (
+    select i.indiv_id, i.fullname, io.occu, o.parent_class
+    	from indiv i
+    	join indiv_occu io on i.indiv_id=io.indiv_id
+    	join occu o on io.occu=o.class
+    	where i.indiv_id = $1
+    )
+    select r.indiv_id, r.parent_class, o2.parent_class AS grandparent from r
+    	join occu o2 on r.parent_class=o2.class
+    )
+    select coalesce(grandparent, parent_class) AS uber
+    	from s group by uber
+
+
+p_twogens(individ text)
+  RETURNS SETOF character varying AS
+  $BODY$
+    SELECT $1
+    	UNION
+    SELECT target FROM edges WHERE edges.source = $1
+    	UNION
+    SELECT source FROM edges WHERE edges.target = $1
+    	UNION
+    SELECT target FROM edges WHERE
+    edges.source IN (
+    	SELECT target FROM edges WHERE edges.source = $1 AND
+    	edges.relation = 'childOf'
+    )
+
+    	UNION
+    SELECT source FROM edges WHERE
+    edges.target IN (
+    	SELECT source FROM edges WHERE edges.target = $1 AND
+    	edges.relation = 'childOf'
+    )
+
+p_arrayoccu(IN indivarray text[])
+  RETURNS TABLE(uber character varying, count numeric) AS
+  $BODY$
+    with
+    s as ( with
+    r as (
+    select i.indiv_id, i.fullname, io.occu, o.parent_class
+    	from indiv i
+    	join indiv_occu io on i.indiv_id=io.indiv_id
+    	join occu o on io.occu=o.class
+    	where i.indiv_id = ANY ($1)
+    )
+    select r.indiv_id, r.parent_class, o2.parent_class AS grandparent from r
+    	join occu o2 on r.parent_class=o2.class
+    )
+    select coalesce(grandparent, parent_class) AS uber, count(*)::numeric as count
+    	from s group by uber
+    	order by count desc
+
+KDijkstra_dist_sp(
+  sql text,
+  source_vid integer,
+  target_vid integer[],
+  directed boolean,
+  has_reverse_cost boolean)
+  RETURNS SETOF dist_result AS
+  '$libdir/librouting_ktargets', 'onetomany_dijkstra_dist'
+
+
+pathQuery.php
+-------------
+indiv
+	joins:	 indiv_dist, indiv_text, indiv_events
+
+db functions:	o_indiv_path_forward(), o_indiv_path_undirected(), p_indivoccu()
+
+
+o_indiv_path_forward(
+      IN source character varying,
+      IN target character varying,
+      IN relations character varying)
+    RETURNS TABLE(id integer, source character varying, target character varying, relation character varying) AS
+  $BODY$
+  SELECT
+
+  recno as id,
+  source,
+  target,
+  relation
+
+  FROM shortest_path('
+  SELECT
+
+  edges.recno as id,
+  (substr(target, 2, length(target) - 1))::integer as source,
+  (substr(source, 2, length(source) - 1))::integer as target,
+  (case
+  when date_part(''year'',first(s.lifeperiod)) - date_part(''year'',first(t.lifeperiod)) < 0 then 1
+  else 10000
+  END
+  )::double precision as cost
+
+  FROM
+
+  edges
+  LEFT JOIN indiv as s ON s.indiv_id = edges.source
+  LEFT JOIN indiv as t ON t.indiv_id = edges.target
+
+  WHERE
+  s.lifeperiod != ''-EMPTY-'' AND t.lifeperiod != ''-EMPTY-'' AND
+  ('''||$3||''' LIKE (''%''||edges.relation||''%''))
+  ',(substr($1, 2, length($1) - 1))::integer, (substr($2, 2, length($2) - 1))::integer, false, false)
+
+  LEFT JOIN edges ON edges.recno = edge_id
+
+
+similarity.php
+--------------
+sims
+	joins: indiv, particip, event
+
+indiv_occu
+
+db functions:	KDijkstra_dist_sp()
+
+occu_events_d3.php
+------------------
+indiv
+event
+indiv_occu
+occu

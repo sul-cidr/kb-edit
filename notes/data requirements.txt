@@ -1,0 +1,90 @@
+* = used in app (most probably);
+
+/// create INDIV ///
+
+* indiv_id character varying(12) NOT NULL,
+* sex character(1),
+* fullname character varying(255),
+* givn character varying(255), / given(first)
+* surn character varying(255), / surname (w/o prefix e.g. 'de la'; maiden for women)
+* marnm character varying(255), / full married name for women
+* npfx character varying(255), / name prefix
+* nsfx character varying(255), / name suffix
+* birthyear integer, / certain
+* deathyear integer, /certain
+* birth_abt integer, /'about'
+* death_abt integer, /'about'
+* best integer, /birth year computed estimate
+* dest integer, /death year computed estimate
+* spfx character varying(20),
+
+reli character varying(255),
+notes text,
+fams character varying(12),
+famc character varying(12),
+lifeperiod period,
+odnb integer,
+sim20 text[],
+birt character varying(200),
+deat character varying(200),
+birthdate date,
+deathdate date,
+perioddist integer,
+search_names tsvector,
+lifeperiod_new period,
+perioddist_new integer[],
+bestconf integer[],
+destconf integer[],
+chantext character varying(20),
+chandate date,
+diedyoung integer,
+
+
+/// create EVENT ///
+
+* indiv_id character varying(12),
+* type character varying(50),
+* place text, / free text now, should be geocodable
+* event_date date,
+* year integer,
+* year_abt integer,
+* year_est integer, computed estimate
+* place_id integer,
+* label text, / free text, e.g. Birth of {}, Marriage of {} and {}
+
+verb character varying(30),
+class character varying(12),
+period_text character varying(50),
+cause text,
+notes text,
+actor_id character varying(12),
+search_col tsvector,
+befaft integer,
+year_est_pass integer,
+period_array date[], -- replaces event_period
+event_period_year integer,
+
+event types
+"OCCU";37844 / occupation
+"BIRT";29961 / birth
+"DEAT";28255 / death
+"MARR";15581 / marriage
+"EVEN";2578 / event ('other')
+"RESI";2321 / period of residence
+"EDUC";1600 / education (matriculation)
+"DIV";702 / divorce
+"BURI";453 / burial
+"BAPM";296 / baptism
+"CHR";227 / christening
+"ANUL";32 / marriage annulment
+"GRAD";21 / graduation
+"ADOP";21 / adoption
+"RETI";21 / retirement
+"EMIG";13 / emigration
+"CREM";11 / cremation
+"IMMI";4 / immigration
+"NATU";3 / naturalization
+"DSCR";2 / description ?
+
+
+/// create indiv_occu ///

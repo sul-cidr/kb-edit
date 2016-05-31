@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer  "deathyear"
     t.integer  "birth_abt"
     t.integer  "death_abt"
-    t.integer  "odnb"
+    t.integer  "odnb_id"
     t.text     "sim20",                                                                                    array: true
     t.string   "birt",           limit: 200
     t.string   "deat",           limit: 200

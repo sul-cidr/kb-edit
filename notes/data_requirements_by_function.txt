@@ -1,0 +1,48 @@
+onload
+-------------------
+occupations.txt
+world-50m.json
+world-100m.json
+timeline_events.csv
+
+kinQuery?s=lum&q=lum  (luminaries)
+countyQuery?s={array of indiv_id}
+
+select node
+-----------
+similarity.php?i={indiv+id}&q=kin
+
+  -> bio box
+    # marriages
+    # children
+    occu badge(s)
+    tragedy index
+    # generations (steps to parentless indiv through childOf relations)
+    inbred ("parents share common ancestor {n} generations back")
+    odnb (or distance to someone in it)
+    centrality (1 of {n} most central people...)
+    close links (closest 5 within hardcoded 176)
+
+make connection (by drag & drop or "Connections" menu)
+  - similarity.php?i={}&y={}?q=kin
+  - similarity.php?i={}&y={}?q=kin
+  - pathQuery.php?s={}&t={}&a=0&c=0
+  - countyQuery.php?s=[array of indiv_ids]
+
+settings boxes
+  - color nodes, timeline dot/bars by:
+    - centrality
+    - odnb distance
+    - birthdate
+    - tragedy index
+    - inbreeding
+    - depth (parentless)
+    - gender (default)
+
+stories
+  - Erasmus
+    - kinQuery.php
+    - similarity.php
+    - countyQuery.php
+    - pathQuery.php
+  -

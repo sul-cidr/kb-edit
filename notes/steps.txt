@@ -1,0 +1,18 @@
+*** prep for data update interface ***
+
+- created 'leaner' clone of running codebase --> github.com/sul-cidr/kb-lean
+- clone existing master database on orbis-prod (kindred --> kblean)
+- point kb-lean codebase to new kblean database (in php/conn.php)
+- on orbis-prod clone kb-lean into production location:
+  - [geostaff@orbis-prod webs]$ git clone https://kgeographer:{password}@github.com/sul-cidr/kb-lean.git
+  - flow now:
+    - clone git:kblean
+    - push changes there (to master ultimately)
+    - pull into http://orbis-prod.stanford.edu/webs/kb-lean
+      - accessed at http://orbis-prod.stanford.edu/kb-lean
+      - appears to function correctly, subject to further testing
+- write sql
+
+recreate db in pg 9.4
+pg_dump -U postgres -p 5432 -F c -n public -c -x -O -d kb_development -f ~/repos/dumps/kb_development_20160418.backup
+pg_restore -U postgres -d kindred -c -O kb_development_20160418.backup
