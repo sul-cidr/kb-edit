@@ -24,13 +24,16 @@ gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# per https://consul.stanford.edu/display/dlssdevops/Capistrano+Template
+# per Authorial London project
 group :deployment do
   gem 'capistrano', '~> 3.0'
-  gem 'capistrano-rails' # or other gems as appropriate
+  gem 'capistrano-rails'
   gem 'capistrano-rvm'
+  gem 'capistrano-npm'
   gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
   gem 'dlss-capistrano'
+  gem 'capistrano-bower'
 end
 
 group :development, :test do
