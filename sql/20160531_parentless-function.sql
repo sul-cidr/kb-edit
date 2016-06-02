@@ -1,16 +1,15 @@
 ﻿-- parentless function
 -- select p_parentless(); ~ 5.3 min per 1000
--- where indiv_id in ('I30348','I30346','I30344','I30345','I30343','I30342','I30341','I30347','I30340','I30339','I30338','I30337','I30336','I30349')
 CREATE OR REPLACE FUNCTION p_parentless()
   RETURNS void AS
 $BODY$
 DECLARE _id varchar;
 begin
-	-- update z_edges for this calculation
+	-- use filtered z_edges for this calculation
 	delete from z_edges;
 	insert into z_edges(source,target,relation)
 		select right(target,-1)::int4, right(source,-1)::int4, relation from edges where relation in ('childOf');
-	FOR _id IN SELECT indiv_id FROM indiv_dist where recno < 1001 LOOP
+	FOR _id IN SELECT indiv_id FROM indiv_dist LOOP
       begin
          with y as (
          with z as (

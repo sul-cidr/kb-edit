@@ -1,0 +1,29 @@
+Changes to KB database code necessitated by kb-edit application
+
+DATABASE
+event.class -> class_
+event.type -> type_
+occu.class -> class_
+indiv_occu.occu -> occu_text
+
+p_indivoccu(text)
+  - refereneces to o.class, io.occu -> class_, occu_text
+
+kinQuery.php
+occu.class -> class_
+line 227
+SELECT indiv_id FROM indiv_occu LEFT JOIN occu ON occu.class_ = indiv_occu.occu WHERE occu.recno = '".$source."'
+
+search.php
+occu.class -> class_
+indiv_occu.occu -> occu_text
+line 145
+occu ON class_ = indiv_occu.occu_text
+
+
+lines 94, 98, 106
+event.type -> type_
+e.g.
+event.type_ <> 'RESI'
+
+**** NEXT occu -> occu_text

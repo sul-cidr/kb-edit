@@ -78,4 +78,5 @@ class Indiv < ActiveRecord::Base
 
   end
 
+
 end

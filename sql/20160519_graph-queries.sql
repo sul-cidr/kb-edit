@@ -1,5 +1,11 @@
-﻿select * from edges limit 100
--- tests
+﻿-- tests
+select * from edges limit 100
+select indiv_id from indiv_dist where odnb = -1 -- 32
+select * from indiv where indiv_id in (select indiv_id from indiv_dist where odnb = -1)
+-- there are indiv_dist records for people who aren't in indiv?
+select * from indiv_dist where indiv_id not in (select indiv_id from indiv)
+select recno from indiv_dist order by recno limit 1000
+-- *******************
 drop table z_edges
 drop table z_edgelengths
 

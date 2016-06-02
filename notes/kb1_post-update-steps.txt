@@ -28,7 +28,7 @@ event
 particip
 indiv_occu (not related to OCCU event; 1..* assigned professions from occu table)
 occu (lookup)
-places
+places (we are not adding )
 
 calculated
 ----------
@@ -37,51 +37,55 @@ calculated
 - depends on trag_text, tragic
 
 1) -- re-create trag_text
-  DONE
-2) -- re-create tragic
-  DONE
-3) -- create new indiv_dist records for new indivs
-  DONE
+  DONE; run 31 May; 29951 rows
 
-  (notes/sql/20160502_generate-tables.sql)
+2) -- re-create tragic
+  DONE; run 31 May; 29951 rows; ~10 min
+
+3) -- create new indiv_dist records for new indivs
+  3a  fill indiv_dist fields" trarray, tragedy; run 31 May
+  3b  children, marriages; run 31 May
+  3c  odnb wordcount; run 31 May
+
+  DONE; run 31 May; 0 rows because this set had been entered already
 
 4)  //**// indiv_text (used to rank by count of characters)
-    DONE
+  DONE; run 31 May, 11555 rows
 
 5)  //**// indiv_events
-    DONE
+  DONE; run 31 May, 29951 rows
 
-    //**// extfamily
-    DONE
-6)    - re-create extfamily
-7)    - update siblings
+6) //**// re-create extfamily
+    DONE; run 01 June, spouses, children separately
+
+7)    - update siblings in extfamily
+    DONE; run 01 June
 
 8)  //**// edges
-    DONE
+    DONE; run 01 June
 
-9) -- update indiv_dist fields
+9) update indiv_dist fields
   - tragedy DONE
   - trarray DONE
-  - children DONE
-  - marriage DONE
-  - odnb_id, odnb_wordcount DONE
+  9c) children DONE
+      marriage DONE
+  9d) odnb_id, odnb_wordcount DONE
     - depends on value entered for indiv.odnb_id in new records
 
 10) - odnb (distance to an odnb-er); DONE
-      - run p_odnb()
+      - select p_odnb();
       sql/20160526_odnb-function.sql
       - depends on odnb_id, odnb_wordcount
 
 11) - parentless (# generations on graph); DONE
-      - run p_parentless()
+      - select p_parentless();
       sql/20160531_parentless-function.sql
 
 12) - similarity and sims DONE
-  - run p_simmy(); depends on updating public.similarity)
-  - update/recreate
-    - similarity family vitals & text tsvectors
+    12a) update/recreate similarity: family vitals & text tsvectors
     - sims table: for each INDIV, 15 most similar on dimensions of sims table
       (used to populate 'events in lives of similar people' on bio panel)
+    12b) select p_simmy(); depends on updating public.similarity
 
 
   - (??) inbred -- no can do

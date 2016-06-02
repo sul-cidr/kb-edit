@@ -3,7 +3,7 @@ DECLARE
     _id varchar;
     _ids VARCHAR[];
 BEGIN
-	delete from test_sims;
+	delete from sims;
 	FOR _id IN SELECT indiv_id FROM similarity limit 10 LOOP
 	with w as (
 	with x as(
@@ -21,17 +21,13 @@ BEGIN
 		(SELECT vitals, occ, ev, loc, indiv_id FROM z WHERE indiv_id = _id LIMIT 1) AS original
 		WHERE z.indiv_id != original.indiv_id
 		and z.occ is not null
-	-- 	ORDER BY sim_vitals DESC
-	-- 	LIMIT 15;
 	) select indiv_id, unnest(ARRAY[sim_vitals,sim_occ,sim_ev,sim_loc]) from y
 	) select indiv_id, sum(unnest) as sim from x group by indiv_id
 		order by sim desc limit 15
-	) insert into test_sims(indiv_id, sim_id) select _id, array_agg(indiv_id) from w;
-        --insert into test_sims(indiv_id) select id;
+	) insert into sims(indiv_id, sim_id) select _id, array_agg(indiv_id) from w;
     END LOOP;
 
     RAISE NOTICE 'Done';
---     RETURN 1;
 END;
 $$ LANGUAGE plpgsql;
 

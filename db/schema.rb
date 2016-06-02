@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.date     "chandate"
     t.integer  "diedyoung"
     t.string   "spfx",           limit: 20
+
   end
 
   create_table "indiv_dist", primary_key: "indiv_id", force: :cascade do |t|
