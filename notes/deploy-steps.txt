@@ -1,0 +1,8 @@
+Deploy steps
+02 June 2016
+
+per https://consul.stanford.edu/display/dlssdevops/Capistrano+Template
+
+- add :deployment group to Gemfile
+- $ bundle install
+- $ capify
