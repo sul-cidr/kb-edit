@@ -432,6 +432,7 @@ select i.indiv_id, to_tsvector(array_to_string(array_agg(coalesce(pl.admin2,'')|
 
 -- 12b) ///////////////////////////////////////////////////////////////
 -- create sims.sim_id[] array
+-- run 02Jun2016, 86 min.
 select p_simmy();
 
 
