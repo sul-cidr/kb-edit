@@ -15,6 +15,24 @@ RailsAdmin.config do |config|
     # history_show
   end
 
+  def custom_label_indiv
+    "#{self.fullname}"
+  end
+
+  def custom_label_occu
+    "#{self.class_}"
+  end
+  #
+  def custom_label_particip
+    "#{self.actor_id}"+"_"+"#{self.role}"
+  end
+
+  Event.class_eval do
+    def custom_label_event
+      "#{self.evlabel}"
+    end
+  end
+
 
   config.main_app_name = 'Kindred Britain'
 
@@ -30,6 +48,9 @@ RailsAdmin.config do |config|
   ]
 
   config.model 'Indiv' do
+    object_label_method do
+      :custom_label_indiv
+    end
     list do
       field :indiv_id
       field :fullname
@@ -91,11 +112,27 @@ RailsAdmin.config do |config|
         label "Occupation(s)"
         help "choose 0 or more"
       end
+      field :notes do
+        label "Notes"
+      end
     end
   end
 
   config.model 'Particip' do
+    object_label_method do
+      :custom_label_particip
+    end
+
     list do
+      field :event do
+        label "Event (type: id)"
+      end
+      field :indiv do
+        label "Individual"
+      end
+      field :role do
+        label "Role"
+      end
     end
     edit do
       field :event do
@@ -115,12 +152,18 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Event' do
+    # object_label_method do
+    #   :custom_label_event
+    # end
     list do
       sort_by :recno
       field :recno do
         label "Event id"
         sort_reverse true
       end
+      # field :evlabel do
+      #   label "evlabel"
+      # end
       field :type_ do
         label "Type"
       end
@@ -237,6 +280,9 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Occu' do
+    object_label_method do
+      :custom_label_occu
+    end
     edit do
       field :class_ do
         label "Class"

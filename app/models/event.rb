@@ -53,4 +53,7 @@ class Event < ActiveRecord::Base
     self.class.uniq.pluck(:type_).sort()
   end
 
+  def evlabel
+    self.type_ + '_' + self.recno.to_s
+  end
 end
