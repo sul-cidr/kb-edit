@@ -12,7 +12,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/passenger'
-require 'capistrano/npm'
+# require 'capistrano/npm'
 
 # commenting to prevent gems gfailing bundle-audit
 require 'dlss/capistrano'
