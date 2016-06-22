@@ -22,6 +22,8 @@ gem 'jbuilder', '~> 2.0'
 
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 
+gem 'therubyracer', platforms: :ruby
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
