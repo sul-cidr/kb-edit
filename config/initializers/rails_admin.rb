@@ -17,6 +17,7 @@ RailsAdmin.config do |config|
 
   def custom_label_indiv
     "#{self.fullname}"
+    "#{self.fullname}"+"_"+"#{self.indiv_id}"
   end
 
   def custom_label_occu
@@ -141,7 +142,7 @@ RailsAdmin.config do |config|
           click 'Save and edit' button for Event record"
       end
       field :indiv do
-        label "Individual ID"
+        label "Individual"
         help ""
       end
       field :role do

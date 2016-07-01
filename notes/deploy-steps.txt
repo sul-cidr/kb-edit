@@ -18,22 +18,28 @@ per https://consul.stanford.edu/display/dlssdevops/Capistrano+Template
  * database related
 */
 
-# locally
-$ pg_dump -F c -n public -c -x -O -d kb_test -f /kb/dump/kb_test_20160601.backup
+# locally; use kbtester (has post-proc result run remotely)
+$ pg_dump -F c -n public -c -x -O -d kbtester -f /kb/dump/kbtester_20160623.backup
 
 # on cidr-kindred-britain-edit
-$ pg_restore -d kb_edit -c -O dumps/kb_test_20160601.backup
+$ pg_restore -d kb_edit -c -O dumps/kbtester_20160622.backup
 
 # get copy back to local for testing
 $ pg_dump -F c -n public -c -x -O -d kb_edit -f dumps/kb_edit_20160602.backup
 $ pg_restore -d kbtester -c -O /kb/dump/kb_edit_20160602.backup
+
+# copy newly edited from cidr-kindred-britain-edit to cidr-kindred-britain-prod
+scp dumps/kbtester_20160622.backup cidr@cidr-kindred-britain-prod.stanford.edu:dumps/kbtester_20160622.backup
+
+# restore newly edited db for visual test at
+# http://cidr-kindred-britain-prod/kbtester
+pg_restore -d kbtester -c -O dumps/kbtester_20160623.backup
+
+  # restored 22June, 138 errors
+
 
   -F format=custom
   -n schema=public
   -c clean
   -x no privileges
   -O no owner
-
-
-  # on orbis-prod
-  $ pg_dump -U postgres -p 5432 -F c -n public -c -x -O -d kblean -f ~/pgbackup/kindred_full_20160324.backup

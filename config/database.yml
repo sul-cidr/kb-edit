@@ -26,8 +26,14 @@ development:
   <<: *default
   # database: kb_development
   # kbtester copied back from staging server after post-processing 02Jun
+  # use kbtester
   database: kbtester
   # database: kb_test
+
+staging:
+  <<: *default
+  database: kb_edit
+  password: <%= ENV['KB_DATABASE_PASSWORD'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -85,5 +91,4 @@ development:
 production:
   <<: *default
   database: kb_edit
-  username: kb
   password: <%= ENV['KB_DATABASE_PASSWORD'] %>
