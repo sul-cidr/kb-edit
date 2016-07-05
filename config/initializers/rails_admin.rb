@@ -147,7 +147,7 @@ RailsAdmin.config do |config|
       end
       field :role do
         label "Role"
-        help "for BIRT: mother, father, child; for MARR: husband, wife"
+        help "BIRT(mother, father, child); DEAT(deceased); MARR(husband, wife); RESI(resident); OCCU(principal)"
       end
     end
   end
