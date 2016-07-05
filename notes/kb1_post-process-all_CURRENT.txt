@@ -1,0 +1,98 @@
+/* kb1_post-process_CURRENT.txt */
+
+the 11 steps of post-processing to follow KBv1 data adds, edits
+SQL is found in
+  - notes/sql/post-process-all_CURRENT.sql
+  - notes/sql/kb1_post{n}.sql   (n = 1-11)
+---------------------------------------------------------------
+
+//**// indiv_dist (notes/sql/post-process_CURRENT.sql)
+
+1) -- re-create trag_text
+  DONE; run 31 May; 29951 rows
+
+2) -- re-create tragic
+  DONE; run 31 May; 29951 rows; ~10 min
+
+3) -- create new indiv_dist records for new indivs
+  3a  fill indiv_dist fields" trarray, tragedy; run 31 May
+  3b  children, marriages; run 31 May
+  3c  odnb wordcount; run 31 May
+
+  DONE; run 31 May; 0 rows because this set had been entered already
+
+4)  //**// indiv_text (used to rank by count of characters)
+  DONE; run 31 May, 11555 rows
+
+5)  //**// indiv_events
+  DONE; run 31 May, 29951 rows
+
+6) //**// re-create extfamily
+    DONE; run 01 June, spouses, children separately
+    6a    - update siblings in extfamily
+
+7)  //**// edges
+    DONE; run 01 June
+
+8) update indiv_dist fields
+  - tragedy DONE
+  - trarray DONE
+  8a) children DONE
+      marriage DONE
+  8b) odnb_id, odnb_wordcount DONE
+    - depends on value entered for indiv.odnb_id in new records
+
+9) - odnb (distance to an odnb-er); DONE
+      - select p_odnb();
+      sql/20160526_odnb-function.sql
+      - depends on odnb_id, odnb_wordcount
+
+10) - parentless (# generations on graph); DONE
+      - select p_parentless();
+      sql/20160531_parentless-function.sql
+
+11) - similarity and sims DONE
+    11a) update/recreate similarity: family vitals & text tsvectors
+    - sims table: for each INDIV, 15 most similar on dimensions of sims table
+      (used to populate 'events in lives of similar people' on bio panel)
+    11b) select p_simmy(); depends on updating public.similarity
+
+  - (??) centrality -- no can do
+
+//**** MISC NOTES ****\\
+
+TESTS/FIXES
+  - indiv_dist: all fields need a value
+  - new INDIVs with no death year need dest = 2013
+
+*** KB v1 data sources ***
+*** notes/kb1_data-sources.txt ***
+*** sql in sql/20160502_generate-tables.sql
+*** sql in sql/20160502_indiv-dist.sql
+*** dev sql for iterating functions
+  - p_simmy() -> sql/20160524_simmy-function.sql
+  - p_odnb() -> sql/20160526_odnb-function.sql
+  - p_parentless() -> sql/20160531_parentless-function.sql
+
+STATIC:
+/kb1/data/world-50m.json
+/kb1/data/world-110m.json
+/kb1/timeline_events.csv
+/kb1/data/occupations.txt
+
+PHP:
+kinQuery.php? [ s(source indiv)[indiv_id], q(query type)[gen, list] ]
+countyQuery.php? [s(source indiv)[indiv_id], q(query type)[path]]
+similarity.php? [i[indiv_id], y[year], q(query type)[kin]]
+pathQuery.php? [s=I2967&t=I1797&b=0&a=0&c=0]
+search.php? [s(source indiv), y(year start), e (year end)]
+
+TABLES:
+models
+------
+indiv
+event
+particip
+indiv_occu (not related to OCCU event; 1..* assigned professions from occu table)
+occu (lookup)
+places (we are not adding )
