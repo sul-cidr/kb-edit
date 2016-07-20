@@ -1,0 +1,942 @@
+{
+    nodes: [
+        {
+            id: "I2452",
+            gender: "F",
+            name: "St. Wulfthryth Queen of England",
+            parentless: 0,
+            birthyear: 941,
+            end: 1000,
+            size: 16,
+            color: "orchid",
+            image: "female",
+            charsize: 46,
+            centrality: 4,
+            tragedy: 1,
+            odnb: 2,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Abbess of Wilton",
+                    eventplace: "",
+                    eventdate: "FROM 964",
+                    accuracy: "roughly",
+                    actor: [
+                        "I2452"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of Edgar [House of Wessex] and Wulfthryth Queen of England",
+                    eventplace: "",
+                    eventdate: "BEF 964",
+                    accuracy: "roughly",
+                    actor: [
+                        "I2444",
+                        "I2452"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Wulfthryth Queen of England",
+                    eventplace: "",
+                    eventdate: "941 (estimated)",
+                    accuracy: "roughly",
+                    actor: [
+                        "I2452"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Eadgyth [House of Wessex]",
+                    eventplace: "Kemsing, Kent",
+                    eventdate: "Between 961 and 964 ",
+                    place: 11257,
+                    accuracy: "roughly",
+                    actor: [
+                        "I2453",
+                        "I2444",
+                        "I2452"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "‘Abbess of Wilton'; see ODNB",
+                    eventplace: "",
+                    eventdate: "",
+                    accuracy: "",
+                    actor: [
+                        "I2452"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "Wilton Abbey",
+                    eventdate: "ABT 1000",
+                    place: 2221,
+                    accuracy: "roughly",
+                    actor: [
+                        "I2452"
+                    ]
+                }
+            ],
+            occus: [
+                "religion",
+                "royalty-court"
+            ]
+        },
+        {
+            id: "I2453",
+            gender: "F",
+            name: "St. Eadgyth [House of Wessex]",
+            parentless: 9,
+            birthyear: 962,
+            end: 985,
+            size: 16,
+            color: "orchid",
+            image: "female",
+            charsize: 67,
+            centrality: 4,
+            tragedy: 1,
+            odnb: 2,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Spent almost all her life as a nun at Wilton Abbey",
+                    eventplace: "",
+                    eventdate: "",
+                    accuracy: "",
+                    actor: [
+                        "I2453"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "Between 984 and 987 ",
+                    accuracy: "roughly",
+                    actor: [
+                        "I2453"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Eadgyth [House of Wessex]",
+                    eventplace: "Kemsing, Kent",
+                    eventdate: "Between 961 and 964 ",
+                    place: 11257,
+                    accuracy: "roughly",
+                    actor: [
+                        "I2453",
+                        "I2444",
+                        "I2452"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "‘Nun'; see ODNB",
+                    eventplace: "",
+                    eventdate: "",
+                    accuracy: "",
+                    actor: [
+                        "I2453"
+                    ]
+                }
+            ],
+            occus: [
+                "religion",
+                "royalty-court"
+            ]
+        },
+        {
+            id: "I22007",
+            gender: "M",
+            name: "Charles George Noel",
+            parentless: 40,
+            birthyear: 1818,
+            end: 1881,
+            size: 16,
+            color: "palegreen",
+            image: "male",
+            charsize: 70,
+            centrality: 6,
+            tragedy: 1,
+            odnb: 1,
+            relatedness: 8,
+            aevents: [
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Edward Noel",
+                    eventplace: "",
+                    eventdate: "1852 April 28",
+                    year: 34,
+                    accuracy: "known",
+                    actor: [
+                        "I30350",
+                        "I22008",
+                        "I22007"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Lord Lieutenant of Rutland",
+                    eventplace: "",
+                    eventdate: "Between 1867 and 1881 ",
+                    year: 56,
+                    accuracy: "roughly",
+                    actor: [
+                        "I22007"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of Charles George Noel and Ida Harriet Augusta Hay",
+                    eventplace: "",
+                    eventdate: "1841 November 01",
+                    year: 23,
+                    accuracy: "known",
+                    actor: [
+                        "I22007",
+                        "I22008"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Charles George Noel",
+                    eventplace: "",
+                    eventdate: "1818 September 05",
+                    year: 0,
+                    accuracy: "known",
+                    actor: [
+                        "I22007",
+                        "I21799",
+                        "I21801"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "1881 August 13",
+                    year: 63,
+                    accuracy: "known",
+                    actor: [
+                        "I22007"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Liberal MP for Rutland",
+                    eventplace: "",
+                    eventdate: "Between 1840 and 1841 ",
+                    year: 22,
+                    accuracy: "roughly",
+                    actor: [
+                        "I22007"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Sheriff of Rutland",
+                    eventplace: "",
+                    eventdate: "1848",
+                    year: 30,
+                    accuracy: "known",
+                    actor: [
+                        "I22007"
+                    ]
+                }
+            ],
+            occus: [
+                "politics"
+            ]
+        },
+        {
+            id: "I22008",
+            gender: "F",
+            name: "Lady Ida Harriet Augusta Hay",
+            parentless: 42,
+            birthyear: 1821,
+            end: 1867,
+            size: 16,
+            color: "orchid",
+            image: "female",
+            charsize: 60,
+            centrality: 6,
+            tragedy: 0,
+            odnb: 2,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Edward Noel",
+                    eventplace: "",
+                    eventdate: "1852 April 28",
+                    year: 31,
+                    accuracy: "known",
+                    actor: [
+                        "I30350",
+                        "I22008",
+                        "I22007"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Ida Harriet Augusta Hay",
+                    eventplace: "",
+                    eventdate: "1821 October 29",
+                    year: 0,
+                    accuracy: "known",
+                    actor: [
+                        "I22008",
+                        "I9008",
+                        "I9007"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Bridesmaid to her cousin once removed Queen Victoria [I3920]",
+                    eventplace: "Chapel Royal, St. James's Palace, London",
+                    eventdate: "1840 February 10",
+                    place: 5680,
+                    year: 19,
+                    accuracy: "known",
+                    actor: [
+                        "I22008"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "1867 October 22",
+                    year: 46,
+                    accuracy: "known",
+                    actor: [
+                        "I22008"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of Charles George Noel and Ida Harriet Augusta Hay",
+                    eventplace: "",
+                    eventdate: "1841 November 01",
+                    year: 20,
+                    accuracy: "known",
+                    actor: [
+                        "I22007",
+                        "I22008"
+                    ]
+                }
+            ],
+            occus: [
+                "royalty-court"
+            ]
+        },
+        {
+            id: "I30350",
+            gender: "M",
+            name: "Lieut. Col. Hon. Edward Noel",
+            parentless: 0,
+            birthyear: 1852,
+            end: 2013,
+            size: 16,
+            color: "palegreen",
+            image: "male",
+            charsize: 153,
+            centrality: 0,
+            tragedy: 0,
+            odnb: 1,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Edward Noel",
+                    eventplace: "",
+                    eventdate: "1852 April 28",
+                    accuracy: "known",
+                    actor: [
+                        "I30350",
+                        "I22008",
+                        "I22007"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of Edward Noel and Ruth Lucas",
+                    eventplace: "",
+                    eventdate: "1884 October 07",
+                    accuracy: "known",
+                    actor: [
+                        "I30351",
+                        "I30350"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of John Baptist Lucius Noel",
+                    eventplace: "Newton Abbot, Devon",
+                    eventdate: "1890 February 26",
+                    place: 3028,
+                    accuracy: "known",
+                    actor: [
+                        "I30352",
+                        "I30350",
+                        "I30351"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "1917 November 09",
+                    accuracy: "known",
+                    actor: [
+                        "I30350"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Served in the Rifle Brigade, took part in the Ashanti War, the Jowaki Expedition and the Burmese War",
+                    eventplace: "",
+                    eventdate: "",
+                    accuracy: "",
+                    actor: [
+                        "I30350"
+                    ]
+                }
+            ],
+            occus: [
+                "armed-svcs",
+                "arts-hum-schol"
+            ]
+        },
+        {
+            id: "I30351",
+            gender: "F",
+            name: " Ruth Lucas",
+            parentless: 0,
+            birthyear: 1852,
+            end: 2013,
+            size: 16,
+            color: "orchid",
+            image: "female",
+            charsize: 0,
+            centrality: 0,
+            tragedy: 0,
+            odnb: 1,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of Edward Noel and Ruth Lucas",
+                    eventplace: "",
+                    eventdate: "1884 October 07",
+                    accuracy: "known",
+                    actor: [
+                        "I30351",
+                        "I30350"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of John Baptist Lucius Noel",
+                    eventplace: "Newton Abbot, Devon",
+                    eventdate: "1890 February 26",
+                    place: 3028,
+                    accuracy: "known",
+                    actor: [
+                        "I30352",
+                        "I30350",
+                        "I30351"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "1926 April",
+                    accuracy: "known",
+                    actor: [
+                        "I30351"
+                    ]
+                }
+            ],
+            occus: [
+
+            ]
+        },
+        {
+            id: "I30352",
+            gender: "M",
+            name: "Maj. John Baptist Lucius Noel",
+            parentless: 0,
+            birthyear: 1890,
+            end: 2013,
+            size: 16,
+            color: "palegreen",
+            image: "male",
+            charsize: 599,
+            centrality: 0,
+            tragedy: 0,
+            odnb: 0,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Commissioned into the British Army, initially posted to India",
+                    eventplace: "",
+                    eventdate: "1909",
+                    place: 8318,
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "Ashford Nursing Home, 407 Hythe Road, Ashford, Kent",
+                    eventdate: "1989 March 12",
+                    place: 11289,
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of John Baptist Lucius Noel",
+                    eventplace: "Newton Abbot, Devon",
+                    eventdate: "1890 February 26",
+                    place: 3028,
+                    accuracy: "known",
+                    actor: [
+                        "I30352",
+                        "I30350",
+                        "I30351"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Filmed the 1924 Everest expedition , led by Mallory (I11477) and Irvine (I21210), making The Epic of Everest (1924) - a film whose footage as well as his commissioned performances by 'dancing lamas' in London caused him to be banned from Tibet for three decades",
+                    eventplace: "Nepal",
+                    eventdate: "1924",
+                    place: 17099,
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Retired from British Army, eventually forming Explorer Films Ltd, with Francis Younghusband (I18621)",
+                    eventplace: "",
+                    eventdate: "1922",
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Published Through Tibet to Everest ",
+                    eventplace: "",
+                    eventdate: "1927",
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of John Baptist Lucius Noel and Sybil Graham",
+                    eventplace: "",
+                    eventdate: "1915",
+                    accuracy: "known",
+                    actor: [
+                        "I30353",
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "'Mountaineer and photographer'; see ODNB",
+                    eventplace: "",
+                    eventdate: "",
+                    accuracy: "",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of John Baptist Lucius Noel and Mary Sullivan",
+                    eventplace: "Barnstaple, Devon",
+                    eventdate: "1941 November 17",
+                    place: 3028,
+                    accuracy: "known",
+                    actor: [
+                        "I30354",
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Photographer and film-maker on second Everest expedition, making Climbing Mt. Everest (1922)",
+                    eventplace: "Nepal",
+                    eventdate: "1922",
+                    place: 17099,
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Fought in France and Belgium during First World War",
+                    eventplace: "",
+                    eventdate: "Between 1914 and 1918",
+                    place: 4949,
+                    accuracy: "known",
+                    actor: [
+                        "I30352"
+                    ]
+                }
+            ],
+            occus: [
+                "arts-hum-schol",
+                "nature"
+            ]
+        },
+        {
+            id: "I30353",
+            gender: "F",
+            name: " Sybil Graham",
+            parentless: 0,
+            birthyear: 1890,
+            end: 2013,
+            size: 16,
+            color: "orchid",
+            image: "female",
+            charsize: 72,
+            centrality: 0,
+            tragedy: 0,
+            odnb: 1,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "1939",
+                    accuracy: "known",
+                    actor: [
+                        "I30353"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of John Baptist Lucius Noel and Sybil Graham",
+                    eventplace: "",
+                    eventdate: "1915",
+                    accuracy: "known",
+                    actor: [
+                        "I30353",
+                        "I30352"
+                    ]
+                },
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Published Magic Bird of Chomolungma (a collection of Tibetan folk-takes)",
+                    eventplace: "",
+                    eventdate: "1931",
+                    accuracy: "known",
+                    actor: [
+                        "I30353"
+                    ]
+                }
+            ],
+            occus: [
+                "arts-hum-schol"
+            ]
+        },
+        {
+            id: "I30354",
+            gender: "F",
+            name: " Mary Sullivan",
+            parentless: 0,
+            birthyear: 1890,
+            end: 2013,
+            size: 16,
+            color: "orchid",
+            image: "female",
+            charsize: 0,
+            centrality: 0,
+            tragedy: 0,
+            odnb: 1,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "",
+                    eventdate: "1984",
+                    accuracy: "known",
+                    actor: [
+                        "I30354"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of John Baptist Lucius Noel and Mary Sullivan",
+                    eventplace: "Barnstaple, Devon",
+                    eventdate: "1941 November 17",
+                    place: 3028,
+                    accuracy: "known",
+                    actor: [
+                        "I30354",
+                        "I30352"
+                    ]
+                }
+            ],
+            occus: [
+
+            ]
+        },
+        {
+            id: "I9585",
+            gender: "M",
+            name: "Maj. Douglas Holden Blew-Jones",
+            parentless: 0,
+            birthyear: 1894,
+            end: 1947,
+            size: 16,
+            color: "palegreen",
+            image: "male",
+            charsize: 29,
+            centrality: 5,
+            tragedy: 0,
+            odnb: 2,
+            relatedness: 0,
+            aevents: [
+                {
+                    eventtype: "OCCU",
+                    eventlabel: "Served in the 1st Life Guards",
+                    eventplace: "",
+                    eventdate: "",
+                    year: -1895,
+                    accuracy: "",
+                    actor: [
+                        "I9585"
+                    ]
+                },
+                {
+                    eventtype: "DEAT",
+                    eventlabel: "Died",
+                    eventplace: "Lambton Park, County Durham",
+                    eventdate: "1947 September 18",
+                    place: 15632,
+                    year: 53,
+                    accuracy: "known",
+                    actor: [
+                        "I9585"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Douglas Holden Blew-Jones",
+                    eventplace: "London",
+                    eventdate: "1894",
+                    place: 2212,
+                    year: 0,
+                    accuracy: "known",
+                    actor: [
+                        "I9585"
+                    ]
+                },
+                {
+                    eventtype: "MARR",
+                    eventlabel: "Marriage of Douglas Holden Blew-Jones and Violet Hilda Margaret Birkin",
+                    eventplace: "Bingham, Nottinghamshire",
+                    eventdate: "1918 December 17",
+                    place: 14857,
+                    year: 24,
+                    accuracy: "known",
+                    actor: [
+                        "I9585",
+                        "I9586"
+                    ]
+                },
+                {
+                    eventtype: "BIRT",
+                    eventlabel: "Birth of Belinda Blew-Jones",
+                    eventplace: "",
+                    eventdate: "1921 December 23",
+                    year: 27,
+                    accuracy: "known",
+                    actor: [
+                        "I9584",
+                        "I9585",
+                        "I9586"
+                    ]
+                }
+            ],
+            occus: [
+                "armed-svcs"
+            ]
+        }
+    ],
+    links: [
+        {
+            source: 2,
+            target: 3,
+            sid: "I22007",
+            tid: "I22008",
+            value: 5,
+            relation: "green",
+            id: "277676",
+            color: "green"
+        },
+        {
+            source: 4,
+            target: 5,
+            sid: "I30350",
+            tid: "I30351",
+            value: 5,
+            relation: "green",
+            id: "282509",
+            color: "green"
+        },
+        {
+            source: 6,
+            target: 7,
+            sid: "I30352",
+            tid: "I30353",
+            value: 5,
+            relation: "green",
+            id: "282510",
+            color: "green"
+        },
+        {
+            source: 6,
+            target: 8,
+            sid: "I30352",
+            tid: "I30354",
+            value: 5,
+            relation: "green",
+            id: "282511",
+            color: "green"
+        },
+        {
+            source: 2,
+            target: 4,
+            sid: "I22007",
+            tid: "I30350",
+            value: 5,
+            relation: "blue",
+            id: "300976",
+            color: "blue"
+        },
+        {
+            source: 3,
+            target: 4,
+            sid: "I22008",
+            tid: "I30350",
+            value: 5,
+            relation: "blue",
+            id: "300977",
+            color: "blue"
+        },
+        {
+            source: 0,
+            target: 4,
+            sid: "I2452",
+            tid: "I30350",
+            value: 5,
+            relation: "blue",
+            id: "303886",
+            color: "blue"
+        },
+        {
+            source: 0,
+            target: 1,
+            sid: "I2452",
+            tid: "I2453",
+            value: 5,
+            relation: "blue",
+            id: "303887",
+            color: "blue"
+        },
+        {
+            source: 4,
+            target: 6,
+            sid: "I30350",
+            tid: "I30352",
+            value: 5,
+            relation: "blue",
+            id: "310158",
+            color: "blue"
+        },
+        {
+            source: 5,
+            target: 6,
+            sid: "I30351",
+            tid: "I30352",
+            value: 5,
+            relation: "blue",
+            id: "310159",
+            color: "blue"
+        },
+        {
+            source: 9,
+            target: 4,
+            sid: "I9585",
+            tid: "I30350",
+            value: 5,
+            relation: "blue",
+            id: "319496",
+            color: "blue"
+        },
+        {
+            source: 1,
+            target: 4,
+            sid: "I2453",
+            tid: "I30350",
+            value: 5,
+            relation: "purple",
+            id: "332109",
+            color: "purple"
+        }
+    ],
+    occu: [
+        {
+            activity: "arts-hum-schol",
+            total: 3
+        },
+        {
+            activity: "royalty-court",
+            total: 3
+        },
+        {
+            activity: "religion",
+            total: 2
+        },
+        {
+            activity: "nature",
+            total: 2
+        },
+        {
+            activity: "armed-svcs",
+            total: 2
+        },
+        {
+            activity: "politics",
+            total: 1
+        }
+    ]
+}

@@ -1,6 +1,16 @@
 -- 11) ///////////////////////////////////////////////////////////////
 -- similarity, then sims
 -- 11a) occ, event, loc text ////////////////////////////////////////
+-- first ensure a birth year is in indiv where available
+with z as (
+select i.indiv_id, p.event_id, e.year, e.year_abt, e.year_est from indiv i
+   join particip p on i.indiv_id = p.actor_id
+   join event e on p.event_id = e.recno
+   where p.role = 'child'
+) update indiv i set
+  birthyear = coalesce(z.year, z.year_abt, z.year_est from z
+  where coalesce(i.birthyear,i.birth_abt,i.best) is null
+  and z.indiv_id = i.indiv_id;
 
 delete from similarity;
 insert into similarity(indiv_id,byear,dyear,children,siblings)
@@ -40,3 +50,6 @@ select i.indiv_id, to_tsvector(array_to_string(array_agg(coalesce(pl.admin2,'')|
 -- create sims.sim_id[] array
 -- run 02Jun2016, 86 min.
 select p_simmy();
+
+update indiv set marnm = null where marnm = '';
+update indiv set search_names = to_tsvector('english', fullname||' '||coalesce(marnm,'') );

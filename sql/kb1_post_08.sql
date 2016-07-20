@@ -1,7 +1,7 @@
 -- 8) ///////////////////////////////////////////////////////////////
 -- add records to indiv_dist for new indiv records [run 02May2016, added 14 recods]
 insert into indiv_dist(indiv_id,odnb_id)
-  select indiv_id, odnb from indiv i where i.indiv_id not in (select indiv_id from indiv_dist) -- order by indiv_id
+  select indiv_id, odnb from indiv i where i.indiv_id not in (select indiv_id from indiv_dist); -- order by indiv_id
 
 -- then fill in fields for new records
 -- insert tragedy and trarray fields in indiv_dist (run time 2.5 sec)
@@ -68,4 +68,3 @@ update indiv_dist id set
   from odnbers o
   where id.odnb_id is not null
   and o.odnb_id = id.odnb_id;
-  

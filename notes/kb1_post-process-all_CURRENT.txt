@@ -9,30 +9,28 @@ SQL is found in
 //**// indiv_dist (notes/sql/post-process_CURRENT.sql)
 
 1) -- re-create trag_text
-  DONE; run 31 May; 29951 rows
+  DONE; run 05 July; 29957 rows
 
-2) -- re-create tragic
-  DONE; run 31 May; 29951 rows; ~10 min
+2) -- re-create tragic    *** ~10 min ***
+  DONE; run 05 July; 29957 rows;
 
 3) -- create new indiv_dist records for new indivs
-  3a  fill indiv_dist fields" trarray, tragedy; run 31 May
-  3b  children, marriages; run 31 May
-  3c  odnb wordcount; run 31 May
-
-  DONE; run 31 May; 0 rows because this set had been entered already
+  3a  fill indiv_dist fields" trarray, tragedy; run 05 July
+  3b  children, marriages; run 05 July
+  3c  odnb wordcount; run 05 July
 
 4)  //**// indiv_text (used to rank by count of characters)
-  DONE; run 31 May, 11555 rows
+  DONE; run 05 July, 11558 rows
 
 5)  //**// indiv_events
-  DONE; run 31 May, 29951 rows
+  DONE; run 05 July, 29957 rows
 
-6) //**// re-create extfamily
-    DONE; run 01 June, spouses, children separately
-    6a    - update siblings in extfamily
+6) //**// re-create extfamily    *** LONG ONE ***
+    DONE; run 07 July, 29957 rows
+    6a    - update souse, children, siblings in extfamily
 
 7)  //**// edges
-    DONE; run 01 June
+    DONE; run 07 July, 97918 rows
 
 8) update indiv_dist fields
   - tragedy DONE

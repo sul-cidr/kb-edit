@@ -11,8 +11,8 @@ select p.event_id, p.actor_id, e.type_, e.year, e.year_abt, e.year_est from part
 	join event e on p.event_id = e.recno
 	where p.actor_id in (select indiv_id from indiv where recno > 229348)
 	and e.type_ = 'BIRT'
- ) 
-update indiv i set 
+ )
+update indiv i set
 	birthyear = z.year,
 	birth_abt = z.year_abt,
 	best = z.year_est
@@ -24,8 +24,8 @@ select p.event_id, p.actor_id, e.type_, e.year, e.year_abt, e.year_est from part
 	join event e on p.event_id = e.recno
 	where p.actor_id in (select indiv_id from indiv where recno > 229348)
 	and e.type_ = 'DEAT'
- ) 
-update indiv i set 
+ )
+update indiv i set
 	deathyear = z.year,
 	death_abt = z.year_abt,
 	dest = z.year_est
@@ -171,11 +171,11 @@ select distinct(indiv_id) from extfamily;
 -- public.similarity
 -- first update similarity, then sims
 
-delete from test_similarity;
+delete from similarity;
 -- select indiv_id from extfamily where indiv_id not in (select indiv_id from similarity); -- 1853
-insert into test_similarity(indiv_id,byear,dyear,children,siblings)
+insert into similarity(indiv_id,byear,dyear,children,siblings)
 	select e.indiv_id, coalesce(i.birthyear,i.birth_abt,i.best),coalesce(i.deathyear,i.death_abt,i.dest),
-	coalesce(array_length(children,1),0), coalesce(array_length(siblings,1),0) 
+	coalesce(array_length(children,1),0), coalesce(array_length(siblings,1),0)
 	from extfamily e
 	join indiv i on e.indiv_id = i.indiv_id;
 -- occ 11,019
@@ -183,7 +183,7 @@ with z as (
 select indiv_id, to_tsvector(array_agg(occu_text)::text) as occ from indiv_occu io
 	--where it.indiv_id not in (select indiv_id from similarity)
 	group by indiv_id
-) update test_similarity ts set occ = z.occ from z where ts.indiv_id = z.indiv_id;
+) update similarity ts set occ = z.occ from z where ts.indiv_id = z.indiv_id;
 
 -- event 11,930
 with z as (
@@ -193,17 +193,17 @@ select i.indiv_id, to_tsvector(array_agg(e.label)::text) as event from indiv i
 	where e.type_ in ('OCCU','EDUC','EVEN','IMMI','GRAD')
 	--and i.indiv_id not in (select indiv_id from similarity)
 	group by i.indiv_id
-) update test_similarity ts set event = z.event from z where ts.indiv_id = z.indiv_id;
+) update similarity ts set event = z.event from z where ts.indiv_id = z.indiv_id;
 -- loc (alternate) 21,762
 with z as (
-select i.indiv_id, to_tsvector(array_to_string(array_agg(coalesce(pl.admin2,'')||' '||coalesce(pl.admin1,'')||coalesce(pl.ccode,'')),' ')) as loc 
+select i.indiv_id, to_tsvector(array_to_string(array_agg(coalesce(pl.admin2,'')||' '||coalesce(pl.admin1,'')||coalesce(pl.ccode,'')),' ')) as loc
 	from indiv i
 	join particip p on i.indiv_id = p.actor_id
 	join event e on p.event_id = e.recno
 	join place pl on e.place_id = pl.placeid
 	--where i.indiv_id not in (select indiv_id from similarity)
 	group by i.indiv_id
-) update test_similarity ts set loc = z.loc from z where ts.indiv_id = z.indiv_id;
+) update similarity ts set loc = z.loc from z where ts.indiv_id = z.indiv_id;
 -- loc
 -- select i.indiv_id, to_tsvector(array_agg(pl.dbname)::text) as loc from indiv i
 -- 	join particip p on i.indiv_id = p.actor_id
@@ -225,5 +225,5 @@ update indiv set search_names = to_tsvector('english', coalesce(marnm,fullname))
 
 
 -- select count(*) from indiv_text where professions is not null -- 11,617 people have professions
--- 
+--
 -- select indiv_id from indiv order by recno desc limit 100

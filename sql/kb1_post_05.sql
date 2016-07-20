@@ -39,4 +39,3 @@ insert into indiv_events(indiv_id, particip_array)
     ']' -- as particip_array
     from indiv i join y on i.indiv_id = any(y.actor)
     group by i.indiv_id order by indiv_id -- limit 300
-

@@ -9,7 +9,14 @@ Deploy steps
 - check db backup in place
   - [cidr@cidr-kindred-britain-edit ~]$ ll /opt/app/cidr/db_backups
 - run SQL on cidr-kindred-britain-edit
-  - psql
+  - nohup psql -d kb_edit -f kb1_post_{nn}.sql for each of 11 files
+- dump kb_edit from cidr-kindred-britain-edit
+- back up kbtester on cidr-kindred-britain-prod
+- restore kb_edit dump to kbtester on cidr-kindred-britain-prod
+- check results: https://cidr-kindred-britain-prod.stanford.edu/kbtester/
+- if okay,
+  - back up kindred database
+  - dump kbtester database, restore to kindred
 
 
 /*
@@ -17,23 +24,34 @@ Deploy steps
 */
 
 # locally; use kbtester (has post-proc result run remotely)
-$ pg_dump -F c -n public -c -x -O -d kbtester -f /kb/dump/kbtester_20160623.backup
+$ pg_dump -F c -n public -c -O -d kbtester -f /kb/dump/kbtester_20160623.backup
 
 # on cidr-kindred-britain-edit
 $ pg_restore -d kb_edit -c -O dumps/kbtester_20160622.backup
 
 # get copy back to local for testing
-$ pg_dump -F c -n public -c -x -O -d kb_edit -f dumps/kb_edit_20160602.backup
+$ pg_dump -F c -n public -c -O -d kb_edit -f dumps/kb_edit_20160602.backup
 $ pg_restore -d kbtester -c -O /kb/dump/kb_edit_20160602.backup
 
+# after post-processing, dump to xfer
+[edit] $ pg_dump -F c -n public -c -O -d kb_edit -f dumps_xfer/kb_edit_20160602.backup
+
 # copy newly edited from cidr-kindred-britain-edit to cidr-kindred-britain-prod
-scp dumps/kbtester_20160622.backup cidr@cidr-kindred-britain-prod.stanford.edu:dumps/kbtester_20160622.backup
+[edit] $ scp dumps_xfer/kb_edt_20160622.backup cidr@cidr-kindred-britain-prod.stanford.edu:xfer/kb_edit_20160622.backup
+
+# back up tester on prod
+[prod] $ pg_dump -F c -n public -c -O -d kbtester -f db_backups/kb_edit_2016-07-08.backup
 
 # restore newly edited db for visual test at
 # http://cidr-kindred-britain-prod/kbtester
-pg_restore -d kbtester -c -O dumps/kbtester_20160623.backup
+$ pg_restore -d kbtester -c -O xfer/kb_edit_2016-07-08.backup
 
-  # restored 22June, 138 errors
+08 July, restored w/11 errors (usual)
+added group by fields to kinQuery.php and search.php
+due to errors like:
+Warning: pg_query(): Query failed: ERROR: column "indiv.npfx" must appear in
+  the GROUP BY clause or be used in an aggregate function
+  LINE 19: COALESCE(indiv.npfx||' ','')||indiv.fullname as fullname, ^ in /var/www/html/kbtester/php/kinQuery.php on line 194 error, no result!
 
 
   -F format=custom

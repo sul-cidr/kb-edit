@@ -93,7 +93,9 @@ delete from indiv_dist where indiv_id not in (select indiv_id from indiv);
 -- need to add records to indiv_dist for new indiv records
 insert into indiv_dist(indiv_id,odnb_id)
 	select indiv_id, odnb from indiv i where i.indiv_id not in (select indiv_id from indiv_dist);
-
+-- no nulls allowed, even though we're not computing these
+update indiv_dist set inbred = 0 where centrality is null;
+update indiv_dist set inbred = 0 where inbred is null;
 -- then fill in fields for new records
 -- insert tragedy and trarray fields in indiv_dist (run time 2.5 sec)
 -- test: copy indiv_dist to 'temp' schema, clone it back into 'public' --
@@ -429,5 +431,5 @@ select p_simmy();
 
 
 -- (???) cleanup
-update indiv set marnm = null where marnm = ''
+update indiv set marnm = null where marnm = '';
 update indiv set search_names = to_tsvector('english', coalesce(marnm,fullname))

@@ -13,7 +13,7 @@ delete from extfamily;
 -- [run 03May2016, 29952 rows 14+ min.; 01Jun2016 wo/spouse,children, ~14 min]
 -- ERROR: null value in column "recno" violates not-null constraint
 -- cause: moving/copying table between schemas changed serial sequence to plain integer
-select * from event where recno is null
+-- select * from event where recno is null
 insert into extfamily(indiv_id,sex,mother,father,-- spouses,children, -- siblings,
     birthyear,birth_abt,birth_est,deathyear,death_abt,death_est)
   select i.indiv_id, i.sex,

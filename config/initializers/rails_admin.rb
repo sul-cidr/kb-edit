@@ -95,7 +95,11 @@ RailsAdmin.config do |config|
       end
       field :marnm do
         label "Married name"
-        help ""
+        help "Complete name, e.g.: title, first, middle, maiden, last)"
+      end
+      field :best do
+        label "Est. birth year"
+        help "Must enter if individual has no BIRT event"
       end
       field :npfx do
         label "Name prefix"
