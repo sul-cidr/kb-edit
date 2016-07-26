@@ -97,10 +97,6 @@ RailsAdmin.config do |config|
         label "Married name"
         help "Complete name, e.g.: title, first, middle, maiden, last)"
       end
-      field :best do
-        label "Est. birth year"
-        help "Must enter if individual has no BIRT event"
-      end
       field :npfx do
         label "Name prefix"
         help "e.g. 'Sir', 'Countess', 'Capt.'"
@@ -178,10 +174,16 @@ RailsAdmin.config do |config|
       # field :indiv_id do
       #   label "Subj (if applic)"
       # end
-      field :period_text do
-        label "When"
+      field :year do
+        label "yr certain"
       end
-      field :year
+      field :year_abt do
+        label "yr abt"
+      end
+      field :year_est do
+        label "yr est"
+      end
+
     end
 
     edit do

@@ -3,7 +3,37 @@
 -- "Make sure to set dest = 2013 to dest = 2099 before running this"
 -- Array is diedyoung,earlyspouse,earlysibling,earlychild,earlyparent
 
-UPDATE indiv SET dest = 2099 WHERE dest = 2013;
+-- first copy birth year data for new indivs from events
+-- (no birth data in indiv)
+with z as (
+select i.indiv_id, p.event_id, e.year, e.year_abt, e.year_est from indiv i
+   join particip p on i.indiv_id = p.actor_id
+   join event e on p.event_id = e.recno
+   where p.role = 'child'
+) update indiv i set
+  birthyear = z.year,
+  birth_abt = z.year_abt,
+  best = z.year_est from z
+  where z.indiv_id = i.indiv_id
+  and birthyear is null and birth_abt is null and best is null;
+-- and death data
+with z as (
+select i.indiv_id, p.event_id, e.year, e.year_abt, e.year_est from indiv i
+   join particip p on i.indiv_id = p.actor_id
+   join event e on p.event_id = e.recno
+   where p.role = 'deceased'
+) update indiv i set
+  deathyear = z.year,
+  death_abt = z.year_abt,
+  dest = z.year_est from z
+  where z.indiv_id = i.indiv_id
+  and deathyear is null and death_abt is null and dest is null;
+
+-- set dest if not dead
+UPDATE indiv SET dest = 2017 WHERE deathyear is null and death_abt is null and dest is null;
+
+-- now do tragic computation
+UPDATE indiv SET dest = 2099 WHERE dest = 2017;
 
 DROP TABLE tragic;
 
@@ -67,6 +97,6 @@ CREATE TABLE tragic AS
   LEFT JOIN indiv as target ON target.indiv_id IN (edges.source, edges.target) AND target.indiv_ID <> indiv.indiv_id
   GROUP BY indiv.indiv_id;
 
-UPDATE indiv SET dest = 2013 WHERE dest = 2099;
+UPDATE indiv SET dest = 2017 WHERE dest = 2099;
 -- new people for whom we have no death year
-update indiv set dest = 2013 where deathyear is null and death_abt is null and dest is null;
+update indiv set dest = 2017 where deathyear is null and death_abt is null and dest is null;

@@ -1,0 +1,19 @@
+
+
+vpn access vs. public
+
+# hops between an individual and "the 100" wrong
+
+- no place? no parens!
+
+- St. St. Margaret of Scotland ???
+
+- John Baptist ... I30352 -- initial quote is right-quote
+
+- add year_abt and year_est for Event list display
+- remove year_est from INDIV record
+
+- where does full date in bio box event list come from? should get parsed from date certain; 
+
+- prince & princess different distances from their grandmum !?
+

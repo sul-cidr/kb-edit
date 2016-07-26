@@ -44,7 +44,10 @@ $ pg_restore -d kbtester -c -O /kb/dump/kb_edit_20160602.backup
 
 # restore newly edited db for visual test at
 # http://cidr-kindred-britain-prod/kbtester
-$ pg_restore -d kbtester -c -O xfer/kb_edit_2016-07-08.backup
+$ pg_restore -d kbtester -c -O xfer/kb_edit_2016-07-22.backup
+
+22 July, restored w/3 errors
+
 
 08 July, restored w/11 errors (usual)
 added group by fields to kinQuery.php and search.php
