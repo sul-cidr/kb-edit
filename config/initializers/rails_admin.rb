@@ -204,7 +204,8 @@ RailsAdmin.config do |config|
       end
       field :label do
         label "Label"
-        help "e.g. 'Birth of <fullname>'; Marriage of <fullname> and <fullname>"
+        help "e.g. 'Birth of <fullname>'; Marriage of <fullname> and <fullname>;
+          (use Alt-], Alt-Shift-] for single quotes where applicable)";
       end
       field :period_text do
         label "When"

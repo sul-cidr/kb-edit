@@ -2,9 +2,12 @@
 -- indiv_events (indiv_d, particip_array)
 -- TODO: why are year values wierd? does it matter?
 -- this gets all events and their participonts, use array_agg per indiv_id
--- [29937 existing; run 03May2016, 29952] <- 15 new records but only 14 new INDIVs
-DROP table bak.indiv_events;
+-- [29937 existing; run 03May2016, 29952]
+
+-- back up indiv_events to the bak schema first
+DROP TABLE bak.indiv_events;
 select * into bak.indiv_events from indiv_events;
+-- remake indiv_events
 delete from indiv_events;
 insert into indiv_events(indiv_id, particip_array)
   with y as (

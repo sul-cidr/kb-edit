@@ -7,7 +7,7 @@ drop table bak.edges;
 select * into bak.edges from edges;
 delete from edges;
 
--- selfLoop [run 03May2016, +29952; 01Jun2016]
+-- add selfLoop [run 03May2016, +29952; 01Jun2016]
 insert into edges(source,target,relation)
   select i.indiv_id, i.indiv_id, 'selfLoop' from indiv i;
 -- spouseOf [run 03May2016, +15191; 01Jun2016]

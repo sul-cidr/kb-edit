@@ -2,18 +2,32 @@
 
 vpn access vs. public
 
-# hops between an individual and "the 100" wrong
+/ - search broken
 
-- no place? no parens!
+/ - # hops between an individual and "the 100" wrong
+/  - Edward Noel and St. Margaret of Scotland were joined by a sibling relation
+- error in edges table generation
 
-- St. St. Margaret of Scotland ???
+/ - no place? no parens!
+  - new records' blank place_text is '', not null
+  - added command to 2a.sql
 
-- John Baptist ... I30352 -- initial quote is right-quote
+/ - St. St. Margaret of Scotland ???
+- her record had a given name of St. Margaret AND a name prefix of St.
 
-- add year_abt and year_est for Event list display
-- remove year_est from INDIV record
+/ - John Baptist ... I30352 -- initial quote is right-quote
+  - use Alt-] and Alt-Shift-] for single quotes
 
-- where does full date in bio box event list come from? should get parsed from date certain; 
+/ - add year_abt and year_est for Event list display
+/ - remove year_est from INDIV record
 
-- prince & princess different distances from their grandmum !?
+/ - where does full date in bio box event list come from? 
+  - comes from event.period_text; 
+  - command now in 2a.sql to ensure period_text is formatted event_date
+  - use '1832', 'March 1832', or '1832 March 09'
 
+/- prince & princess different distances from their ODNB grandmum !?
+/  - where is ODNB identity coming from?
+/  - I3914 is ODNB, not reflected in INDIV, but is in indiv_dist
+- not all ODNBers were reflected in kb_edit.indiv_dist.odnb field
+- update indiv_dist set odnb = 0 where indiv_id in (select indiv_id from indiv_odnb);

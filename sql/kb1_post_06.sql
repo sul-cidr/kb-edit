@@ -2,7 +2,7 @@
 -- create extfamily
 -- given current 'indiv', 'event', and 'particip' tables
 -- ///////////////////////////////////////////////////////////////
--- uses helpers:
+-- uses helper functions:
   -- p_parent(indiv_id,['mother' | 'father'])
   -- p_spouses(indiv_id)
   -- p_children(indiv_id)
@@ -20,7 +20,7 @@ insert into extfamily(indiv_id,sex,mother,father,
   p_parent(i.indiv_id,'mother'),
   p_parent(i.indiv_id,'father'),
   i.birthyear,i.birth_abt,i.best,i.deathyear,i.death_abt,i.dest
-  from indiv i order by indiv_id; 
+  from indiv i order by indiv_id;
 
 -- ///////// run helper functions all run 01Jun2016 ////////////////////////
 -- spouses
@@ -31,6 +31,15 @@ update extfamily set children = p_children(indiv_id); -- 10 min.
 -- ///////////////////////////////////////////////////////////////
 -- siblings; depends on children (all rows)
 update extfamily set siblings = p_siblings(indiv_id); -- 3.6 min.
--- test: seems ok
+
+-- (from 3b; extfamily a dependency) /////////////
+-- put number of children, marriages into indiv_dist
+update indiv_dist id set
+  children = coalesce(array_length(ef.children,1),0),
+  marriage = coalesce(array_length(ef.spouses,1),0)
+  from extfamily ef
+  where ef.indiv_id = id.indiv_id;
+
+-- test:
 -- select * from extfamily where indiv_id = 'I30349' -- Turing; ok
 -- select * from extfamily where indiv_id = 'I30347' -- Turing's father; ok

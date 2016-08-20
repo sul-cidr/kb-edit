@@ -1,5 +1,6 @@
 -- 4) ///////////////////////////////////////////////////////////////
--- indiv_text [run 03May2016, 11555 rows; 31May2016, 11555 rows]
+-- indiv_text [ ]
+-- remake indiv_text (aggregates event-related verbiage)
 -- ?? is occutext the only field used (earlier table has many other fields)
 
 delete from indiv_text;

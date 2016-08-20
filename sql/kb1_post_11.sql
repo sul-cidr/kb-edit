@@ -1,17 +1,7 @@
 -- 11) ///////////////////////////////////////////////////////////////
--- similarity, then sims
--- 11a) occ, event, loc text ////////////////////////////////////////
--- first copy birth year data from events to indiv
-with z as (
-select i.indiv_id, p.event_id, e.year, e.year_abt, e.year_est from indiv i
-   join particip p on i.indiv_id = p.actor_id
-   join event e on p.event_id = e.recno
-   where p.role = 'child'
-) update indiv i set
-  birthyear = z.year,
-  birth_abt = z.year_abt,
-  best = z.year_est from z
-  where z.indiv_id = i.indiv_id;
+-- populate similarity table with parameters,
+-- then p_simmy() computes sims for each INDIV
+-- [90 min +/-]
 
 delete from similarity;
 insert into similarity(indiv_id,byear,dyear,children,siblings)

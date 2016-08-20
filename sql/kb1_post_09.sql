@@ -1,5 +1,5 @@
 -- 9) ///////////////////////////////////////////////////////////////
--- put odnb (distance) into indiv_dist
--- 3627 odnbers at the moment
--- 01Jun2016,
+-- compute indiv_dist.odnb (distance to an ODNBer)
+--
+
 select p_odnb();
