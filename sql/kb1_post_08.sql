@@ -1,77 +1,78 @@
--- 8) ///////////////////////////////////////////////////////////////
---    remake indiv_dist.trarray field
+-- 2b) ///////////////////////////////////////////////////////////////
+-- recreate tragic table (run time ~14 min)
+--  [run 02May2016, 29952 rows; 31May2016, ]
+-- "Make sure to set dest = 2017 to dest = 2099 before running this"
+-- Array is diedyoung,earlyspouse,earlysibling,earlychild,earlyparent
 
--- 6-16 DONE ALREADY, #3
--- add records to indiv_dist for new indiv records [run 02May2016, added 14 recods]
--- insert into indiv_dist(indiv_id,odnb_id)
---  select indiv_id, odnb from indiv i where i.indiv_id not in
--- (select indiv_id from indiv_dist);
+-- set dest if not dead
+-- living INDIVs have a death date of 2017 so timeline bar has end point
+-- this needs to get set, reset to 2099 for some reason, then reset
+UPDATE indiv SET dest = 2017 WHERE deathyear IS NULL AND death_abt IS NULL
+  AND dest IS NULL;
 
--- then fill in fields for new records
--- insert tragedy and trarray fields in indiv_dist (run time 2.5 sec)
--- test: copy indiv_dist to 'temp' schema, clone it back into 'public' --
--- alter table indiv_dist set schema temp;
--- select * into indiv_dist from temp.indiv_dist;
--- [run 02May2016, seems okay; 01Jun2016]
-----------
+-- now do tragic computation
+UPDATE indiv SET dest = 2099 WHERE dest = 2017;
 
-UPDATE indiv_dist SET trarray =
-  '['||(
+DROP TABLE tragic;
+
+CREATE TABLE tragic AS
+  SELECT indiv.indiv_id,
+  SUM(
   CASE
-  when LOWER(deathtext) LIKE '%wounds%' OR LOWER(deathtext) LIKE '%battle%' OR LOWER(deathtext) LIKE '%killed in action%' OR LOWER(deathtext) LIKE '%cwgc.org%' then 1
-  when LOWER(deathtext) LIKE '%hanged%' OR LOWER(deathtext) LIKE '%shot%' OR LOWER(deathtext) LIKE '%executed%' OR LOWER(deathtext) LIKE '%beheaded%' OR LOWER(deathtext) LIKE '%tower hill%' OR LOWER(deathtext) LIKE '%tyburn%' then 1
-  when LOWER(deathtext) LIKE '%murdered%' OR LOWER(deathtext) LIKE '%stabbed%' OR LOWER(deathtext) LIKE '%suicide%' OR LOWER(deathtext) LIKE '%killed herself%' OR LOWER(deathtext) LIKE '%killed himself%' then 1
-  else diedyoung
-  END
-  )||
-  ','||tragic.trarray||','||
-  (
-  CASE
-  when LOWER(eventext) LIKE '%insane%' OR LOWER(eventext) LIKE '%breakdown%' OR LOWER(eventext) LIKE '%lunatic%' then 1
+  when target.indiv_id IS NULL AND COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) <= 45  then 1
   else 0
   END
-  )||']',
+  ) as diedyoung,
 
-  tragedy = total +
+  SUM(
   (
   CASE
-  when LOWER(deathtext) LIKE '%wounds%' OR LOWER(deathtext) LIKE '%battle%' OR LOWER(deathtext) LIKE '%killed in action%' OR LOWER(deathtext) LIKE '%cwgc.org%' then 1
-  when LOWER(deathtext) LIKE '%hanged%' OR LOWER(deathtext) LIKE '%shot%' OR LOWER(deathtext) LIKE '%executed%' OR LOWER(deathtext) LIKE '%beheaded%' OR LOWER(deathtext) LIKE '%tower hill%' OR LOWER(deathtext) LIKE '%tyburn%' then 1
-  when LOWER(deathtext) LIKE '%murdered%' OR LOWER(deathtext) LIKE '%stabbed%' OR LOWER(deathtext) LIKE '%suicide%' OR LOWER(deathtext) LIKE '%killed herself%' OR LOWER(deathtext) LIKE '%killed himself%' then 1
-  else diedyoung
-  END
-  )
-  +
-  (
-  CASE
-  when LOWER(eventext) LIKE '%insane%' OR LOWER(eventext) LIKE '%breakdown%' OR LOWER(eventext) LIKE '%lunatic%' then 1
+  when edges.relation = 'spouseOf' AND COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - COALESCE(target.deathyear,target.death_abt,target.dest) >= 20 then 1
+  when edges.relation = 'siblingOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+  when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+  when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) < COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) <= 12 then 1
   else 0
   END
   )
+  ) as total,
+  ''||
 
-  FROM tragic, trag_text
-  WHERE trag_text.indiv_id = tragic.indiv_id
-  AND tragic.indiv_id = indiv_dist.indiv_id;
+  SUM(
+  (
+  CASE
+  when edges.relation = 'spouseOf' AND COALESCE(indiv.deathyear,indiv.death_abt,indiv.dest) - COALESCE(target.deathyear,target.death_abt,target.dest) >= 20 then 1
+  else 0
+  END
+  )
+  )||','||
 
+  SUM(
+  (
+  CASE
+  when edges.relation = 'siblingOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+  else 0
+  END
+  )
+  )||','||
+  SUM(
+  (
+  CASE
+  when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) > COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(target.birthyear,target.birth_abt,target.best) <= 12 then 1
+  else 0
+  END
+  )
+  )||','||
+  SUM(
+  (
+  CASE
+  when edges.relation = 'childOf' AND COALESCE(target.birthyear,target.birth_abt,target.best) < COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) AND COALESCE(target.deathyear,target.death_abt,target.dest) - COALESCE(indiv.birthyear,indiv.birth_abt,indiv.best) <= 12 then 1
+  else 0
+  END
+  )
+  ) as trarray
+  FROM indiv
+  LEFT JOIN edges ON indiv.indiv_id IN (edges.source, edges.target)
+  LEFT JOIN indiv as target ON target.indiv_id IN (edges.source, edges.target) AND target.indiv_ID <> indiv.indiv_id
+  GROUP BY indiv.indiv_id;
 
--- 8a) ///////////////////////////////////////////////////////////////
--- requires updated extfamily
--- DONE ALREADY, IN #6
--- put number of children, marriages into indiv_dist
--- update indiv_dist id set
---   children = coalesce(array_length(ef.children,1),0),
---   marriage = coalesce(array_length(ef.spouses,1),0)
---   from extfamily ef
---   where ef.indiv_id = id.indiv_id;
-
--- 8b) ///////////////////////////////////////////////////////////////
--- odnb_wordcount
--- DONE ALREADY, IN #3
--- !!! relies on indiv.odnb value for new indiv records !!!
--- NOTE: json.odnb in code refers to indiv_dist.odnb, NOT indiv.odnb_id
--- update indiv_dist id set
--- --   odnb_id = o.odnb_id,
---   odnb_wordcount = o.words
---   from odnbers o
---   where id.odnb_id is not null
---   and o.odnb_id = id.odnb_id;
+UPDATE indiv SET dest = 2017 WHERE dest = 2099;
