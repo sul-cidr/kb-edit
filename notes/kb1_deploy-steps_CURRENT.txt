@@ -1,6 +1,36 @@
 Deploy steps
-06 June 2016
 
+19 Aug 2016
+- N. Jenkins edits complete 19 Aug
+- review records
+- place_id changes, so new backup (run ./kbedit-backup.sh)
+- changes had been made to sql files & admin forms, so commit, push to git
+- deploy kb-edit
+  - $ SKIP_BUNDLE_AUDIT=true bundle exec cap production deploy
+-
+  $ nohup psql -d kb_edit -f kb1_post_01.sql > 01.out
+    -> ok
+  $ nohup psql -d kb_edit -f kb1_post_02.sql > 02.out
+    - minor change to query #3 -> ok
+  $ nohup psql -d kb_edit -f kb1_post_03.sql > 03.out
+    -> ok
+
+22-23 Aug
+  run 12 scripts: kb1_post_01.sql, etc.
+24 Aug
+  backup working database under kbtester app on prod
+  restore new (postprocessed) db to public.kbtester
+  set permissions:
+    grant select on all tables in schema public to webapp, public;
+    grant execute on all functions in schema public to webapp, public;
+  - I30357 unexpected token syntax error in JSON: no network
+25 Aug
+  - determined tabs in some text fields were causing malformed json
+  - fixed on production; needs validation logic in forms
+  
+
+
+06 June 2016
 - N. Jenkins edits complete 1 July
 - deploy kb-edit code base
   - commit, push master branch to github

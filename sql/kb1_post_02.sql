@@ -18,10 +18,10 @@ select i.indiv_id, p.event_id, e.year, e.year_abt, e.year_est from indiv i
    where p.role = 'child'
 ) update indiv i set
   birthyear = z.year,
-  birth_abt = z.year_abt,
---  best = z.year_est from z
+  birth_abt = z.year_abt
+  from z
   where z.indiv_id = i.indiv_id
-  and birthyear is null and birth_abt is null; --and best is null;
+  and coalesce(birthyear, birth_abt, best) is null;
 
 
 -- and death data
