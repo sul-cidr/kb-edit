@@ -90,5 +90,5 @@ staging:
 #
 production:
   <<: *default
-  database: kb_edit
+  database: kindred-britain-stage
   password: <%= ENV['KB_DATABASE_PASSWORD'] %>
