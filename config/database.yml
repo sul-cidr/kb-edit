@@ -27,12 +27,12 @@ development:
   # database: kb_development
   # kbtester copied back from staging server after post-processing 02Jun
   # use kbtester
-  database: kbtester
+  database: kindred-britain-stage
   # database: kb_test
 
 staging:
   <<: *default
-  database: kb_edit
+  database: kindred-britain-stage
   password: <%= ENV['KB_DATABASE_PASSWORD'] %>
 
   # The specified database role being used to connect to postgres.
