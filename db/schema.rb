@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.string  "featclass", limit: 1
     t.string  "featcode",  limit: 10
     t.string  "ccode",     limit: 2
-    t.date    "mod_date",              default: "(now())::date"
+    t.date    "mod_date",  default: "(now())::date"  # comment default value if rake db:setup fails
     t.string  "admin1",    limit: 100
     t.string  "admin2",    limit: 100
   end
