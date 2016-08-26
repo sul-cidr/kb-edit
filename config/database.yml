@@ -27,7 +27,7 @@ development:
   # database: kb_development
   # kbtester copied back from staging server after post-processing 02Jun
   # use kbtester
-  database: kindred-britain-stage
+  database: kbtester
   # database: kb_test
 
 staging:
