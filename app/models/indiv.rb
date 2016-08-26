@@ -50,6 +50,9 @@ class Indiv < ActiveRecord::Base
   # has_many :events, :through => :particips
 
   before_create :set_indiv_id
+ 
+  # Validation for string and text fields
+  validates_with StringTextValidator
 
   rails_admin do
     label 'Indiv'

@@ -17,6 +17,9 @@ class Particip < ActiveRecord::Base
   belongs_to :event, foreign_key: :event_id
   belongs_to :indiv, foreign_key: :actor_id, primary_key: :indiv_id
 
+  # Validation for string and text fields
+  validates_with StringTextValidator
+
   rails_admin do
     label 'Participation'
   end

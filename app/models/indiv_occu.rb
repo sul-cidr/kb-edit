@@ -15,4 +15,7 @@ class IndivOccu < ActiveRecord::Base
   belongs_to :indiv, foreign_key: :indiv_id, primary_key: :indiv_id
   belongs_to :occu, foreign_key: :occu_text, primary_key: :class_
 
+  # Validation for string and text fields
+  validates_with StringTextValidator
+
 end

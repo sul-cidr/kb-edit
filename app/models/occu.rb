@@ -13,6 +13,9 @@ class Occu < ActiveRecord::Base
   self.table_name = 'occu'
   self.primary_key = 'recno'
 
+  # Validation for string and text fields
+  validates_with StringTextValidator
+
   rails_admin do
     label 'Occupation'
     object_label_method :class_

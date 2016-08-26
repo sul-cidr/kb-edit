@@ -24,6 +24,9 @@ class Place < ActiveRecord::Base
   self.table_name = 'place'
   self.primary_key = 'placeid'
 
+  # Validation for string and text fields
+  validates_with StringTextValidator
+
   rails_admin do
 
     label 'Place'

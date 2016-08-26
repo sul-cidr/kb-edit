@@ -37,6 +37,9 @@ class Event < ActiveRecord::Base
   # attr_accessible :indiv_ids
   has_one :place, primary_key: :place_id, foreign_key: :placeid
 
+  # Validation for string and text fields
+  validates_with StringTextValidator
+
   rails_admin do
     label 'Event'
     object_label_method :label
