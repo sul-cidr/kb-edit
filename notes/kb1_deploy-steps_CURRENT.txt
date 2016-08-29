@@ -27,9 +27,13 @@ Deploy steps
 25 Aug
   - determined tabs in some text fields were causing malformed json
   - fixed on production; needs validation logic in forms
-  
+  - new VM -stage in place, but need configs copied by Tony
+  - need to deploy -edit Rails app, and kb-v2 app to -stage
+  - on 29 Aug
+29 Aug
+  - deploy Javier's validating logic
 
-
+++++++++++++++++
 06 June 2016
 - N. Jenkins edits complete 1 July
 - deploy kb-edit code base
