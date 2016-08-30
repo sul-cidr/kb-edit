@@ -53,6 +53,11 @@ Deploy steps
   - dump kbtester database, restore to kindred
 
 
+/ *
+  * capistrano
+/*
+SKIP_BUNDLE_AUDIT=true bundle exec cap production deploy
+
 /*
  * database related
 */
