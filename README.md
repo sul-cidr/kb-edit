@@ -59,6 +59,7 @@ Once the database exist `psql -d kbtester`
 ```
 CREATE EXTENSION postgis;
 CREATE EXTENSION pgrouting;
+CREATE EXTENSION unaccent;
 ```
 
 -- Run PostgreSQL
