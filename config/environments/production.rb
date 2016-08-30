@@ -10,6 +10,13 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
+  # Enable subpath config in production for Apache
+  # It might need to recompile assets setting by setting
+  # config.assets.compile = true
+  config.assets.prefix = "/edit/assets"
+  config.action_controller.relative_url_root = '/edit'
+
+
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
