@@ -46,6 +46,10 @@ RailsAdmin.config do |config|
     Particip,
     Occu,
     Place,
+    # IndivOccu,
+    # IndivDist,
+    # IndivText,
+    # Odnb,
   ]
 
   config.model 'Indiv' do

@@ -18,4 +18,11 @@ class IndivOccu < ActiveRecord::Base
   # Validation for string and text fields
   validates_with StringTextValidator
 
+  rails_admin do
+    navigation_label 'Debug'
+    label 'indiv_id'
+    object_label_method :recno
+    weight 100
+
+  end
 end
