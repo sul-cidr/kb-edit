@@ -1,7 +1,4 @@
-
 source 'https://rubygems.org'
-ruby '2.2.3'
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -11,7 +8,6 @@ gem 'pg'
 
 gem 'activerecord-postgis-adapter'
 gem 'rails_admin', '~> 1.0'
-gem 'dotenv-rails'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -31,7 +27,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
-  gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
   gem 'dlss-capistrano'
