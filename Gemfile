@@ -4,13 +4,13 @@ ruby '2.2.3'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
 
 gem 'activerecord-postgis-adapter'
-gem 'rails_admin'
+gem 'rails_admin', '~> 1.0'
 gem 'dotenv-rails'
 
 gem 'sass-rails', '~> 5.0'
@@ -32,11 +32,9 @@ group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
-  gem 'capistrano-npm'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
   gem 'dlss-capistrano'
-  gem 'capistrano-bower'
 end
 
 group :development, :test do
